@@ -312,7 +312,9 @@ public class BaseUIHelper {
 	}
 
 	public static Bitmap textAsBitmap(String text, float textSize) {
-		if (text == null || text.length() == 0) { return null; }
+		if (text == null || text.length() == 0) {
+			return null;
+		}
 
 		Paint paint = new Paint();
 		paint.setTextSize(textSize);
@@ -331,8 +333,11 @@ public class BaseUIHelper {
 	/**
 	 * This method convets dp unit to equivalent device specific value in pixels.
 	 * 
-	 * @param dp A value in dp(Device independent pixels) unit. Which we need to convert into pixels
-	 * @param context Context to get resources and device specific display metrics
+	 * @param dp
+	 *            A value in dp(Device independent pixels) unit. Which we need to convert into
+	 *            pixels
+	 * @param context
+	 *            Context to get resources and device specific display metrics
 	 * @return A float value to represent Pixels equivalent to dp according to device
 	 */
 	public static float convertDpToPixel(float dp, Context context) {
@@ -345,8 +350,10 @@ public class BaseUIHelper {
 	/**
 	 * This method converts device specific pixels to device independent pixels.
 	 * 
-	 * @param px A value in px (pixels) unit. Which we need to convert into db
-	 * @param context Context to get resources and device specific display metrics
+	 * @param px
+	 *            A value in px (pixels) unit. Which we need to convert into db
+	 * @param context
+	 *            Context to get resources and device specific display metrics
 	 * @return A float value to represent db equivalent to px value
 	 */
 	public static float convertPixelsToDp(float px, Context context) {
@@ -373,7 +380,9 @@ public class BaseUIHelper {
 		int scrollY = tv.getScrollY();
 		Layout layout = tv.getLayout();
 
-		if (layout == null) { return 0; }
+		if (layout == null) {
+			return 0;
+		}
 		// int firstVisibleLineNumber = layout.getLineForVertical(scrollY);
 		int lastVisibleLineNumber = layout.getLineForVertical(scrollY + height);
 		return lastVisibleLineNumber;
@@ -382,10 +391,14 @@ public class BaseUIHelper {
 	/**
 	 * Make a textview to a collapsible textview with the indicator on the right of the textview
 	 * 
-	 * @param tv , {@link TextView} to be converted
-	 * @param upDrawableResId , drawable resource id to be used as up indicator
-	 * @param downDrawableResId , drawable resource id to be used as down indicator
-	 * @param lineTreshold , no of line to be displayed for the collapsed state
+	 * @param tv
+	 *            , {@link TextView} to be converted
+	 * @param upDrawableResId
+	 *            , drawable resource id to be used as up indicator
+	 * @param downDrawableResId
+	 *            , drawable resource id to be used as down indicator
+	 * @param lineTreshold
+	 *            , no of line to be displayed for the collapsed state
 	 */
 	public static void makeCollapsible(
 			final TextView tv, int upDrawableResId, int downDrawableResId,
@@ -525,13 +538,11 @@ public class BaseUIHelper {
 
 				@Override
 				public void beforeTextChanged(
-						CharSequence arg0, int arg1, int arg2, int arg3) {
-				}
+						CharSequence arg0, int arg1, int arg2, int arg3) {}
 
 				@Override
 				public void onTextChanged(
-						CharSequence arg0, int arg1, int arg2, int arg3) {
-				}
+						CharSequence arg0, int arg1, int arg2, int arg3) {}
 
 			});
 		}
@@ -549,17 +560,22 @@ public class BaseUIHelper {
 	 * Adjust the tab host being used in the tab host + view pager to use the new drawableResId for
 	 * tab items
 	 * 
-	 * @param mTabHost , tab host to be adjusted
-	 * @param context , context being used
-	 * @param drawableResId , drawable resource for the new background for tab item. Needs to use
-	 *        drawable with different appropriate states!
+	 * @param mTabHost
+	 *            , tab host to be adjusted
+	 * @param context
+	 *            , context being used
+	 * @param drawableResId
+	 *            , drawable resource for the new background for tab item. Needs to use
+	 *            drawable with different appropriate states!
 	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static void adjustTabHost(
 			TabHost mTabHost, Context context, int drawableResId,
 			int textColorResId) {
-		if (mTabHost == null || context == null) { return; }
+		if (mTabHost == null || context == null) {
+			return;
+		}
 		try {
 
 			for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
@@ -577,7 +593,9 @@ public class BaseUIHelper {
 				catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				if (tab == null) { return; }
+				if (tab == null) {
+					return;
+				}
 
 				if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 					tab.setBackgroundDrawable(d); // unselected
@@ -661,7 +679,8 @@ public class BaseUIHelper {
 		int k = Integer.highestOneBit((int) Math.floor(ratio));
 		if (k == 0)
 			return 1;
-		else return k;
+		else
+			return k;
 	}
 
 	public Bitmap getFullBitmap(Activity activity, Uri uri)
@@ -900,7 +919,9 @@ public class BaseUIHelper {
 	}
 
 	public static void rotate(float direction, ImageView compass) {
-		if (compass == null) { return; }
+		if (compass == null) {
+			return;
+		}
 		Matrix matrix = new Matrix();
 		matrix.postRotate(direction, compass.getMeasuredWidth() / 2,
 				compass.getMeasuredHeight() / 2);
@@ -953,6 +974,10 @@ public class BaseUIHelper {
 		return folder;
 	}
 
+	//================================================================================
+    // DEPRECATED FUNCTIONS
+	// USE ImageViewLoader INSTEAD
+    //================================================================================
 	/**
 	 * Load image from url
 	 * 
@@ -965,10 +990,10 @@ public class BaseUIHelper {
 			Context context, final String url, int resPlaceholder, final ImageView img) {
 		// Init animation & start animating with no scale type set to imageview
 		// To avoid cropped progressBar
-//		Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
-//		img.setScaleType(ScaleType.FIT_CENTER);
-//		img.startAnimation(rotate);
-		
+		// Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
+		// img.setScaleType(ScaleType.FIT_CENTER);
+		// img.startAnimation(rotate);
+
 		// Load normally
 		Picasso
 				.with(context)
