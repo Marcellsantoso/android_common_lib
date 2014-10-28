@@ -53,7 +53,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.Transformation;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -62,7 +61,6 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.actionbarsherlock.widget.SearchView;
 import com.iapps.common_library.R;
 import com.squareup.picasso.Callback.EmptyCallback;
 import com.squareup.picasso.Picasso;
@@ -305,11 +303,11 @@ public class BaseUIHelper {
 		return new BitmapDrawable(res, bm);
 	}
 
-	public static void resetSearchView(SearchView searchV) {
-		searchV.setQuery("", false);
-		searchV.onActionViewCollapsed();
-		searchV.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-	}
+//	public static void resetSearchView(SearchView searchV) {
+//		searchV.setQuery("", false);
+//		searchV.onActionViewCollapsed();
+//		searchV.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+//	}
 
 	public static Bitmap textAsBitmap(String text, float textSize) {
 		if (text == null || text.length() == 0) {

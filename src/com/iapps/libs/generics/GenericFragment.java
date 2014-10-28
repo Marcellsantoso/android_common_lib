@@ -2,11 +2,10 @@ package com.iapps.libs.generics;
 
 import java.lang.reflect.Field;
 
+import roboguice.fragment.RoboFragment;
 import android.support.v4.app.Fragment;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
-
-public class GenericFragment extends RoboSherlockFragment {
+public class GenericFragment extends RoboFragment {
 	private static final Field sChildFragmentManagerField;
 
 	// To prevent error in implementing nested fragment

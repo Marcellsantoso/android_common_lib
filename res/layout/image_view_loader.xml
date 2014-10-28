@@ -10,24 +10,12 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical" >
-
-        <ImageButton
-            android:id="@+id/imageFail"
-            android:layout_width="@dimen/progress_width"
-            android:layout_height="@dimen/progress_height"
-            android:src="@drawable/ic_refresh_light"
-            android:visibility="gone" />
-
-        <ProgressBar
-            android:id="@+id/loader"
-            android:layout_width="@dimen/progress_width"
-            android:layout_height="@dimen/progress_height"
-            android:visibility="visible" />
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="@dimen/progress_width"
+        android:layout_height="@dimen/progress_height"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
 
 </RelativeLayout>

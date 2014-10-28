@@ -1,8 +1,8 @@
 package com.iapps.libs.generics;
 
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 
-public class GenericFragmentActivity extends RoboSherlockFragmentActivity {
+public class GenericFragmentActivity extends ActionBarActivity {
 	protected GenericFragmentActivity getActivityInstance(){
 		return this;
 	}
