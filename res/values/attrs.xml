@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="iapps">
-        <attr name="loadingMessageColor" format="color"/>
-        <attr name="loadingErrorTitleColor" format="color"/>
-        <attr name="loadingErrorMessageColor" format="color"/>
-        <attr name="loadingMessage" format="string"/>
-        <attr name="loadingErrorNetworkTitle" format="string"/>
-        <attr name="loadingErrorNoInternetMessage" format="string"/>
-        <attr name="loadingErrorUnknownResponseMessage" format="string"/>
-        <attr name="loadingRetryButtonText" format="string"/>
+        <attr name="loadingMessageColor" format="color" />
+        <attr name="loadingErrorTitleColor" format="color" />
+        <attr name="loadingErrorMessageColor" format="color" />
+        <attr name="loadingMessage" format="string" />
+        <attr name="loadingErrorNetworkTitle" format="string" />
+        <attr name="loadingErrorNoInternetMessage" format="string" />
+        <attr name="loadingErrorUnknownResponseMessage" format="string" />
+        <attr name="loadingRetryButtonText" format="string" />
     </declare-styleable>
+    <declare-styleable name="buttonIcon">
+        <attr name="iconLeftSrc" format="integer" />
+        <attr name="iconRightSrc" format="integer" />
+        <attr name="text" format="string" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+
 </resources>
