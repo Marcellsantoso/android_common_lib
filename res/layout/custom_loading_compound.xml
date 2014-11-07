@@ -12,23 +12,21 @@
         android:orientation="vertical"
         android:visibility="visible" >
 
-        <ProgressBar
-            android:id="@+id/progressBarLoadingCompound"
-            style="?android:attr/progressBarStyleLarge"
+        <com.gc.materialdesign.views.ProgressBarCircularIndetermininate
+            android:id="@+id/progressBarCircularIndetermininate"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:background="#1E88E5" />
 
         <TextView
             android:id="@+id/textViewLoadingMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/iapps__loading"
             android:gravity="center"
+            android:text="@string/iapps__loading"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/dark_transparent_grey"
-             />
-
+            android:textColor="@color/dark_transparent_grey" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,11 +51,11 @@
             android:id="@+id/textViewLoadingErrorMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="@dimen/iapps__vertical_margin"
             android:layout_marginLeft="@dimen/iapps__horizontal_margin"
             android:layout_marginRight="@dimen/iapps__horizontal_margin"
             android:layout_marginTop="@dimen/iapps__vertical_margin"
+            android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/DarkGray"
             android:textIsSelectable="false"
@@ -69,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/iapps__retry" />
-
     </LinearLayout>
 
 </LinearLayout>
