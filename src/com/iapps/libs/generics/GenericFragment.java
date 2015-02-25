@@ -5,8 +5,11 @@ import java.lang.reflect.Field;
 import roboguice.fragment.RoboFragment;
 import android.support.v4.app.Fragment;
 
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
+import com.iapps.common_library.R;
+
 public class GenericFragment extends RoboFragment {
-	private static final Field sChildFragmentManagerField;
+	private static final Field	sChildFragmentManagerField;
 
 	// To prevent error in implementing nested fragment
 	static {
@@ -14,7 +17,8 @@ public class GenericFragment extends RoboFragment {
 		try {
 			f = Fragment.class.getDeclaredField("mChildFragmentManager");
 			f.setAccessible(true);
-		} catch (NoSuchFieldException e) {
+		}
+		catch (NoSuchFieldException e) {
 			// Error getting mChildFragmentManager field
 			e.printStackTrace();
 		}
@@ -28,12 +32,12 @@ public class GenericFragment extends RoboFragment {
 
 		return true;
 	}
-	
-	public void setTitle(int resTitle){
+
+	public void setTitle(int resTitle) {
 		getActivity().setTitle(resTitle);
 	}
-	
-	public void setTitle(String title){
+
+	public void setTitle(String title) {
 		getActivity().setTitle(title);
 	}
 
@@ -44,10 +48,20 @@ public class GenericFragment extends RoboFragment {
 		if (sChildFragmentManagerField != null) {
 			try {
 				sChildFragmentManagerField.set(this, null);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				// Error setting mChildFragmentManager field
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public NumberPickerBuilder popupPicker(Fragment targetFragment) {
+		NumberPickerBuilder picker = new NumberPickerBuilder()
+				.setFragmentManager(getChildFragmentManager())
+				.setStyleResId(R.style.BetterPickersDialogFragment)
+				.setTargetFragment(targetFragment);
+
+		return picker;
 	}
 }

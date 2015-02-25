@@ -26,7 +26,7 @@ public class ImageViewLoader extends RelativeLayout {
 	private long		delay;
 
 	public ImageViewLoader(Context context) {
-		super(context, null);
+		this(context, null);
 	}
 
 	public ImageViewLoader(Context context, AttributeSet attr) {
@@ -102,6 +102,15 @@ public class ImageViewLoader extends RelativeLayout {
 				}
 			});
 		}
+	}
+
+	public void loadImage(int resImage) {
+		RequestCreator imageLoader = Picasso
+				.with(this.getContext())
+				.load(resImage);
+		imageLoader.into(this.image);
+
+		hideProgress();
 	}
 
 	// ================================================================================

@@ -52,6 +52,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -303,11 +304,11 @@ public class BaseUIHelper {
 		return new BitmapDrawable(res, bm);
 	}
 
-//	public static void resetSearchView(SearchView searchV) {
-//		searchV.setQuery("", false);
-//		searchV.onActionViewCollapsed();
-//		searchV.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-//	}
+	// public static void resetSearchView(SearchView searchV) {
+	// searchV.setQuery("", false);
+	// searchV.onActionViewCollapsed();
+	// searchV.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+	// }
 
 	public static Bitmap textAsBitmap(String text, float textSize) {
 		if (text == null || text.length() == 0) {
@@ -972,10 +973,10 @@ public class BaseUIHelper {
 		return folder;
 	}
 
-	//================================================================================
-    // DEPRECATED FUNCTIONS
+	// ================================================================================
+	// DEPRECATED FUNCTIONS
 	// USE ImageViewLoader INSTEAD
-    //================================================================================
+	// ================================================================================
 	/**
 	 * Load image from url
 	 * 
@@ -988,9 +989,9 @@ public class BaseUIHelper {
 			Context context, final String url, int resPlaceholder, final ImageView img) {
 		// Init animation & start animating with no scale type set to imageview
 		// To avoid cropped progressBar
-		// Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
-		// img.setScaleType(ScaleType.FIT_CENTER);
-		// img.startAnimation(rotate);
+		Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
+		img.setScaleType(ScaleType.FIT_CENTER);
+		img.startAnimation(rotate);
 
 		// Load normally
 		Picasso
@@ -998,6 +999,7 @@ public class BaseUIHelper {
 				.load(url)
 				.placeholder(resPlaceholder)
 				.noFade()
+
 				.into(img, new EmptyCallback() {
 
 					@Override
@@ -1054,8 +1056,41 @@ public class BaseUIHelper {
 	 * @param placeholder
 	 */
 	public static void loadImageRounded(
-			Context context, String url, ImageView img, int placeholder) {
-		Picasso.with(context).load(url).placeholder(placeholder)
-				.transform(new CircleTransform()).into(img);
+			Context context, String url, final ImageView img) {
+		// Init animation & start animating with no scale type set to imageview
+		// To avoid cropped progressBar
+		Animation rotate = AnimationUtils.loadAnimation(context, R.anim.rotate);
+		img.setScaleType(ScaleType.FIT_CENTER);
+		img.startAnimation(rotate);
+
+		// Load normally
+		Picasso
+				.with(context)
+				.load(url)
+				.placeholder(R.drawable.ic_progress_dark)
+				.noFade()
+				.transform(new CircleTransform())
+				.into(img, new EmptyCallback() {
+
+					@Override
+					public void onSuccess() {
+						super.onSuccess();
+						// Stop animation
+						img.clearAnimation();
+
+						// Set image back to centerCrop
+						img.setScaleType(ScaleType.CENTER_CROP);
+					}
+
+					@Override
+					public void onError() {
+						super.onError();
+						// Stop animation
+						img.clearAnimation();
+
+						// Show cross image
+						img.setImageResource(R.drawable.ic_cross_dark);
+					}
+				});
 	}
 }
