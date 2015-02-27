@@ -64,4 +64,8 @@ public class GenericFragment extends RoboFragment {
 
 		return picker;
 	}
+
+	public GenericActivity getHome() {
+		return (GenericActivity) getActivity();
+	}
 }
