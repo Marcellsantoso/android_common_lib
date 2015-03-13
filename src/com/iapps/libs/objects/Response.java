@@ -62,7 +62,6 @@ public class Response {
 			for (Map.Entry<String, List<String>> k : headerContent.entrySet()) {
 				if (k.getKey() != null && k.getKey().equals(BaseKeys.DATE_))
 					for (String v : k.getValue()) {
-						Log.d("ASD", "SUCCESS");
 						v = v.substring(0, v.trim().lastIndexOf(" "));
 						return DateTime.parse(v,
 								DateTimeFormat.forPattern(BaseConstants.DATE_EDMYHMS));

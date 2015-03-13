@@ -44,4 +44,8 @@ public class BaseConstants {
 	// in dp
 	public static final float	PREVIEW_SIZE			= 250;
 	public static final String	PLAY_STORE_LINK			= "https://play.google.com/store/apps/details?id=";
+
+	// Debug state
+	public static final boolean	IS_DEBUGGING			= true;
+	public static final String	LOG						= "log";
 }

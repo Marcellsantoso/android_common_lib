@@ -44,19 +44,19 @@ import com.iapps.libs.objects.Response;
  * @author melvin
  */
 public abstract class HTTPAsyncTask
-	extends AsyncTask<String, Void, Response> {
+		extends AsyncTask<String, Void, Response> {
 
-	private boolean httpsEnabled = false;
-	private boolean isMultipart = false;
-	private boolean isCache = true;
-	private boolean isEnableSSLCheck = true;
-	private URL url;
-	private String method = BaseConstants.GET;
-	private Fragment fragment;
-	private LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
-	private ArrayList<LinkedHashMap<String, String>> fileParams = new ArrayList<LinkedHashMap<String, String>>();
-	private LinkedHashMap<String, byte[]> bytesParams = new LinkedHashMap<String, byte[]>();
-	private HashMap<String, String> mHeaderParams = new HashMap<String, String>();
+	private boolean										httpsEnabled		= false;
+	private boolean										isMultipart			= false;
+	private boolean										isCache				= true;
+	private boolean										isEnableSSLCheck	= true;
+	private URL											url;
+	private String										method				= BaseConstants.GET;
+	private Fragment									fragment;
+	private LinkedHashMap<String, String>				params				= new LinkedHashMap<String, String>();
+	private ArrayList<LinkedHashMap<String, String>>	fileParams			= new ArrayList<LinkedHashMap<String, String>>();
+	private LinkedHashMap<String, byte[]>				bytesParams			= new LinkedHashMap<String, byte[]>();
+	private HashMap<String, String>						mHeaderParams		= new HashMap<String, String>();
 
 	protected abstract void onPreExecute();
 
@@ -74,9 +74,10 @@ public abstract class HTTPAsyncTask
 	/**
 	 * Set the URL to be used to connect to the end point
 	 * 
-	 * @param url , the url to be used
+	 * @param url
+	 *            , the url to be used
 	 */
-	public void setUrl(String url) {
+	public HTTPAsyncTask setUrl(String url) {
 
 		try {
 			this.url = new URL(url);
@@ -87,9 +88,11 @@ public abstract class HTTPAsyncTask
 		catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
+
+		return this;
 	}
 
-	public void setGetParams(String key, String value) {
+	public HTTPAsyncTask setGetParams(String key, String value) {
 		if (key != null && value != null && key.trim().length() > 0 && value.trim().length() > 0) {
 			String currentUrl = url.toString();
 			if (currentUrl.contains("?") && currentUrl.indexOf("?") <= currentUrl.length()) {
@@ -112,6 +115,8 @@ public abstract class HTTPAsyncTask
 				}
 			}
 		}
+
+		return this;
 	}
 
 	/**
@@ -120,8 +125,9 @@ public abstract class HTTPAsyncTask
 	 * @param key
 	 * @param value
 	 */
-	public void setHeader(String key, String value) {
+	public HTTPAsyncTask setHeader(String key, String value) {
 		mHeaderParams.put(key, value);
+		return this;
 	}
 
 	public String escapeUrlParam(String param) {
@@ -133,25 +139,27 @@ public abstract class HTTPAsyncTask
 		return param;
 	}
 
-	public void setGetParams(String key, int value) {
+	public HTTPAsyncTask setGetParams(String key, int value) {
 		String val = String.valueOf(value);
-		setGetParams(key, val);
+		return setGetParams(key, val);
 	}
 
 	public String getMethod() {
 		return method;
 	}
 
-	public void setMethod(String method) {
+	public HTTPAsyncTask setMethod(String method) {
 		this.method = method;
+		return this;
 	}
 
 	public boolean isHttpsEnabled() {
 		return httpsEnabled;
 	}
 
-	public void setHttpsEnabled(boolean httpsEnabled) {
+	public HTTPAsyncTask setHttpsEnabled(boolean httpsEnabled) {
 		this.httpsEnabled = httpsEnabled;
+		return this;
 	}
 
 	public boolean isEnableSSLCheck() {
@@ -162,36 +170,51 @@ public abstract class HTTPAsyncTask
 		this.isEnableSSLCheck = isDisableSSLCheck;
 	}
 
-	public void setPostParams(String key, String value) {
-		if (key == null || key.trim().length() <= 0 || value == null || value.trim().length() <= 0) { return; }
+	public HTTPAsyncTask setPostParams(String key, String value) {
+		if (key == null || key.trim().length() <= 0 || value == null || value.trim().length() <= 0) {
+			return this;
+		}
 		this.params.put(key, value);
 		this.setMethod(BaseConstants.POST);
+		return this;
 	}
 
-	public void setPostParams(String key, double value) {
+	public HTTPAsyncTask setPostParams(String key, double value) {
 		String d = String.valueOf(value);
 		this.setPostParams(key, d);
+
+		return this;
 	}
 
-	public void setPostParams(String key, int value) {
+	public HTTPAsyncTask setPostParams(String key, int value) {
 		String d = String.valueOf(value);
 		this.setPostParams(key, d);
+
+		return this;
 	}
 
-	public void setImageParams(String key, String absPath) {
+	public HTTPAsyncTask setImageParams(String key, String absPath) {
 		this.setFileParams(key, absPath, BaseConstants.MIME_JPEG);
+
+		return this;
 	}
 
-	public void setCSVParams(String key, String path) {
+	public HTTPAsyncTask setCSVParams(String key, String path) {
 		this.setFileParams(key, path, BaseConstants.MIME_CSV);
+
+		return this;
 	}
 
-	public void setCache(boolean isCache) {
+	public HTTPAsyncTask setCache(boolean isCache) {
 		this.isCache = isCache;
+
+		return this;
 	}
 
-	public void setFileParams(String key, String path, String mime) {
-		if (path.length() <= 0 || key.trim().length() <= 0) { return; }
+	public HTTPAsyncTask setFileParams(String key, String path, String mime) {
+		if (path.length() <= 0 || key.trim().length() <= 0) {
+			return this;
+		}
 		this.isMultipart = true;
 		String[] q = path.split("/");
 		int idx = q.length - 1;
@@ -201,20 +224,30 @@ public abstract class HTTPAsyncTask
 		file.put(BaseKeys.FILEPATH, path);
 		file.put(BaseKeys.MIME, mime);
 		this.fileParams.add(file);
+
+		return this;
 	}
 
-	public void setByteParams(String key, byte[] bytes) {
-		if (key.trim().length() <= 0 || bytes == null || bytes.length <= 0) { return; }
+	public HTTPAsyncTask setByteParams(String key, byte[] bytes) {
+		if (key.trim().length() <= 0 || bytes == null || bytes.length <= 0) {
+			return this;
+		}
 		this.isMultipart = true;
 		this.bytesParams.put(key, bytes);
+
+		return this;
 	}
 
-	public void setFragment(Fragment fragment) {
+	public HTTPAsyncTask setFragment(Fragment fragment) {
 		this.fragment = fragment;
+
+		return this;
 	}
 
-	public void execute() {
+	public HTTPAsyncTask execute() {
 		super.execute();
+
+		return this;
 	}
 
 	/**
@@ -223,24 +256,24 @@ public abstract class HTTPAsyncTask
 	 */
 	private static void disableSSLCertificateChecking() {
 		TrustManager[] trustAllCerts = new TrustManager[] {
-			new X509TrustManager() {
+				new X509TrustManager() {
 
-				public X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
+					public X509Certificate[] getAcceptedIssuers() {
+						return null;
+					}
 
-				@Override
-				public void checkClientTrusted(X509Certificate[] arg0, String arg1)
-						throws CertificateException {
-					// Not implemented
-				}
+					@Override
+					public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+							throws CertificateException {
+						// Not implemented
+					}
 
-				@Override
-				public void checkServerTrusted(X509Certificate[] arg0, String arg1)
-						throws CertificateException {
-					// Not implemented
+					@Override
+					public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+							throws CertificateException {
+						// Not implemented
+					}
 				}
-			}
 		};
 
 		try {

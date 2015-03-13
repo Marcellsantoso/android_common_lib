@@ -41,48 +41,54 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iapps.common_library.R;
+import com.iapps.libs.generics.GenericActivity;
 import com.iapps.libs.objects.Response;
 import com.iapps.libs.views.LoadingCompound;
 
 public class BaseHelper {
 
-	private static final String MIN_AGO = "min ago.";
-	private static final String MINS_AGO = "mins ago.";
-	private static final String HOUR_AGO = "hour ago.";
-	private static final String HOURS_AGO = "hours ago.";
-	private static final String DAY_AGO = "day ago.";
-	private static final String DAYS_AGO = "days ago.";
+	private static final String	MIN_AGO					= "min ago.";
+	private static final String	MINS_AGO				= "mins ago.";
+	private static final String	HOUR_AGO				= "hour ago.";
+	private static final String	HOURS_AGO				= "hours ago.";
+	private static final String	DAY_AGO					= "day ago.";
+	private static final String	DAYS_AGO				= "days ago.";
 
-	private static final String MIN_LEFT = "min left.";
-	private static final String MINS_LEFT = "mins left.";
-	private static final String HOUR_LEFT = "hour left.";
-	private static final String HOURS_LEFT = "hours left.";
-	private static final String DAY_TO_GO = "day to go.";
-	private static final String DAYS_TO_GO = "days to go.";
-	public static final int REQUEST_EMAIL_CODE = 7221;
-	public static final int REQUEST_GET_IMAGE_CODE = 9882;
+	private static final String	MIN_LEFT				= "min left.";
+	private static final String	MINS_LEFT				= "mins left.";
+	private static final String	HOUR_LEFT				= "hour left.";
+	private static final String	HOURS_LEFT				= "hours left.";
+	private static final String	DAY_TO_GO				= "day to go.";
+	private static final String	DAYS_TO_GO				= "days to go.";
+	public static final int		REQUEST_EMAIL_CODE		= 7221;
+	public static final int		REQUEST_GET_IMAGE_CODE	= 9882;
 
 	/**
 	 * Check if a string is empty (length == 0)
 	 * 
-	 * @param string , to be checked
+	 * @param string
+	 *            , to be checked
 	 * @return true if empty
 	 */
 	public static boolean isEmpty(String string) {
-		if (string == null || string.trim().length() == 0) { return true; }
+		if (string == null || string.trim().length() == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	/**
 	 * Change the state of a view to View.GONE
 	 * 
-	 * @param v , view to be updated
+	 * @param v
+	 *            , view to be updated
 	 */
 	public static void goneView(View v) {
 		if (v != null) {
@@ -94,7 +100,8 @@ public class BaseHelper {
 	/**
 	 * Change the state of a view to View.VISIBLE
 	 * 
-	 * @param v , view to be updated
+	 * @param v
+	 *            , view to be updated
 	 */
 	public static void visibleView(View v) {
 		if (v != null) {
@@ -105,7 +112,8 @@ public class BaseHelper {
 	/**
 	 * Change the state of a view to View.INVISIBLE
 	 * 
-	 * @param v , view to be updated
+	 * @param v
+	 *            , view to be updated
 	 */
 	public static void invisibleView(View v) {
 		if (v != null) {
@@ -120,7 +128,8 @@ public class BaseHelper {
 	 * @param emailAddresses
 	 * @param subject
 	 * @param body
-	 * @param uri , image or attachment
+	 * @param uri
+	 *            , image or attachment
 	 */
 	public static void sendEmail(
 			Activity activity, String[] emailAddresses, String subject, String body, Uri uri) {
@@ -148,7 +157,8 @@ public class BaseHelper {
 	/**
 	 * Open activity to send an SMS
 	 * 
-	 * @param activity to start the sms activity from
+	 * @param activity
+	 *            to start the sms activity from
 	 * @param smsBody
 	 */
 	public static void sendSMS(Activity activity, String smsBody) {
@@ -271,8 +281,10 @@ public class BaseHelper {
 	/**
 	 * Handle response object and returns {@link JSONObject}
 	 * 
-	 * @param response , response object to be handled
-	 * @param loading , loading compound to show the error message/ to hide
+	 * @param response
+	 *            , response object to be handled
+	 * @param loading
+	 *            , loading compound to show the error message/ to hide
 	 * @return valid {@link JSONObject}
 	 */
 	public static JSONObject handleResponse(Response response, LoadingCompound loading) {
@@ -282,9 +294,12 @@ public class BaseHelper {
 	/**
 	 * Handle response object and returns {@link JSONObject}
 	 * 
-	 * @param response , response object to be handled
-	 * @param shouldDisplayDialog , true if should display error dialog popup
-	 * @param context , context being used
+	 * @param response
+	 *            , response object to be handled
+	 * @param shouldDisplayDialog
+	 *            , true if should display error dialog popup
+	 * @param context
+	 *            , context being used
 	 * @return valid {@link JSONObject}
 	 */
 	public static JSONObject handleResponse(
@@ -302,7 +317,8 @@ public class BaseHelper {
 			}
 			else if (response.getStatusCode() == BaseConstants.STATUS_TIMEOUT) {
 				if (loading != null) {
-					loading.showError(null, loading.getContext().getString(R.string.iapps__conn_timeout));
+					loading.showError(null,
+							loading.getContext().getString(R.string.iapps__conn_timeout));
 				}
 				else if (shouldDisplayDialog && context != null) {
 					BaseHelper.showAlert(context, null,
@@ -311,7 +327,8 @@ public class BaseHelper {
 			}
 			else if (response.getStatusCode() == BaseConstants.STATUS_NO_CONNECTION) {
 				if (loading != null) {
-					loading.showError(null, loading.getContext().getString(R.string.iapps__conn_fail));
+					loading.showError(null,
+							loading.getContext().getString(R.string.iapps__conn_fail));
 				}
 				else if (shouldDisplayDialog && context != null) {
 					BaseHelper.showAlert(context, null,
@@ -374,7 +391,9 @@ public class BaseHelper {
 	}
 
 	public static boolean isValidEmail(String emailAddress) {
-		if (emailAddress != null && !EmailValidator.getInstance().isValid(emailAddress.trim())) { return false; }
+		if (emailAddress != null && !EmailValidator.getInstance().isValid(emailAddress.trim())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -393,7 +412,9 @@ public class BaseHelper {
 	 * @return
 	 */
 	public static boolean isYes(String target) {
-		if (target == null) { return false; }
+		if (target == null) {
+			return false;
+		}
 
 		if (target.equals(BaseConstants.YES)) {
 			return true;
@@ -424,7 +445,8 @@ public class BaseHelper {
 							c.onNo();
 						}
 					});
-		else b.setNegativeButton(context.getResources().getString(R.string.iapps__no), null);
+		else
+			b.setNegativeButton(context.getResources().getString(R.string.iapps__no), null);
 
 		b.setPositiveButton(context.getResources().getString(R.string.iapps__yes),
 				new DialogInterface.OnClickListener() {
@@ -681,7 +703,9 @@ public class BaseHelper {
 	 */
 	@Deprecated
 	public static String calcTimeDiff(Date target) {
-		if (target == null) { return null; }
+		if (target == null) {
+			return null;
+		}
 		Calendar calendar1 = Calendar.getInstance();
 		Calendar calendar2 = Calendar.getInstance();
 
@@ -776,12 +800,16 @@ public class BaseHelper {
 	/**
 	 * Calculate absolute time difference
 	 * 
-	 * @param target , date to be compared to now
-	 * @param context , the context
+	 * @param target
+	 *            , date to be compared to now
+	 * @param context
+	 *            , the context
 	 * @return time difference, or date if it is more than 7 days
 	 */
 	public static String calcTimeDiff(Date target, Context context) {
-		if (target == null || context == null) { return null; }
+		if (target == null || context == null) {
+			return null;
+		}
 		Calendar calendar1 = Calendar.getInstance();
 		Calendar calendar2 = Calendar.getInstance();
 
@@ -888,7 +916,9 @@ public class BaseHelper {
 	public static boolean isAlphaNumeric(String s) {
 
 		String pattern = "^[a-zA-Z0-9 ]*$";
-		if (s.matches(pattern)) { return true; }
+		if (s.matches(pattern)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -986,7 +1016,8 @@ public class BaseHelper {
 	 * .REQUEST_IMAGE_CODE Implement {@link BaseUIHelper} .processImage / processPreview
 	 * onActivityResult to process the image results and get the file
 	 * 
-	 * @param activity , activity to handle the onActivityResult
+	 * @param activity
+	 *            , activity to handle the onActivityResult
 	 */
 	public static void pickImage(final Activity activity) {
 		AlertDialog.Builder bld = BaseHelper.buildAlert(activity, "Select Image Source", null);
@@ -995,26 +1026,26 @@ public class BaseHelper {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which) {
-				case 0:
-					Intent i = pickFromGallery();
-					activity.startActivityForResult(i, REQUEST_GET_IMAGE_CODE);
-					break;
-				case 1:
-					// camera
-					PackageManager pm = activity.getApplicationContext().getPackageManager();
+					case 0:
+						Intent i = pickFromGallery();
+						activity.startActivityForResult(i, REQUEST_GET_IMAGE_CODE);
+						break;
+					case 1:
+						// camera
+						PackageManager pm = activity.getApplicationContext().getPackageManager();
 
-					if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-						Intent i2 = pickFromCamera();
-						activity.startActivityForResult(i2, REQUEST_GET_IMAGE_CODE);
-					}
-					else {
-						BaseHelper.showAlert(activity, null, "You dont have a camera", null);
-					}
+						if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+							Intent i2 = pickFromCamera();
+							activity.startActivityForResult(i2, REQUEST_GET_IMAGE_CODE);
+						}
+						else {
+							BaseHelper.showAlert(activity, null, "You dont have a camera", null);
+						}
 
-					break;
+						break;
 
-				default:
-					// nothing
+					default:
+						// nothing
 				}
 			}
 		});
@@ -1028,7 +1059,8 @@ public class BaseHelper {
 	 * .REQUEST_IMAGE_CODE Implement {@link BaseUIHelper} .processImage / processPreview
 	 * onActivityResult to process the image results and get the file
 	 * 
-	 * @param fragment , fragment to handle the onActivityResult
+	 * @param fragment
+	 *            , fragment to handle the onActivityResult
 	 */
 	public static void pickImage(final Fragment fragment) {
 		AlertDialog.Builder bld = BaseHelper.buildAlert(fragment.getActivity(),
@@ -1038,28 +1070,28 @@ public class BaseHelper {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which) {
-				case 0:
-					Intent i = pickFromGallery();
-					fragment.startActivityForResult(i, REQUEST_GET_IMAGE_CODE);
-					break;
-				case 1:
-					// camera
-					PackageManager pm = fragment.getActivity().getApplicationContext()
-							.getPackageManager();
+					case 0:
+						Intent i = pickFromGallery();
+						fragment.startActivityForResult(i, REQUEST_GET_IMAGE_CODE);
+						break;
+					case 1:
+						// camera
+						PackageManager pm = fragment.getActivity().getApplicationContext()
+								.getPackageManager();
 
-					if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-						Intent i2 = pickFromCamera();
-						fragment.startActivityForResult(i2, REQUEST_GET_IMAGE_CODE);
-					}
-					else {
-						BaseHelper.showAlert(fragment.getActivity(), null,
-								"You dont have a camera", null);
-					}
+						if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+							Intent i2 = pickFromCamera();
+							fragment.startActivityForResult(i2, REQUEST_GET_IMAGE_CODE);
+						}
+						else {
+							BaseHelper.showAlert(fragment.getActivity(), null,
+									"You dont have a camera", null);
+						}
 
-					break;
+						break;
 
-				default:
-					// nothing
+					default:
+						// nothing
 				}
 			}
 		});
@@ -1075,7 +1107,9 @@ public class BaseHelper {
 	 * @return
 	 */
 	public static String getVersionName(Context context) {
-		if (context == null) { return null; }
+		if (context == null) {
+			return null;
+		}
 		String ver = null;
 		PackageInfo pInfo;
 		try {
@@ -1095,7 +1129,9 @@ public class BaseHelper {
 	 * @return
 	 */
 	public static int getVersionCode(Context context) {
-		if (context == null) { return 0; }
+		if (context == null) {
+			return 0;
+		}
 		int ver = 0;
 		PackageInfo pInfo;
 		try {
@@ -1111,7 +1147,8 @@ public class BaseHelper {
 	/**
 	 * Format distance to be displayed to the user
 	 * 
-	 * @param d , distance in metres
+	 * @param d
+	 *            , distance in metres
 	 * @return formatted {@link String}
 	 */
 	public static String formatDistance(double d) {
@@ -1128,5 +1165,20 @@ public class BaseHelper {
 	public static String formatCurrency(double d) {
 		DecimalFormat formatter = new DecimalFormat("'$'#,##0.00");
 		return formatter.format(d);
+	}
+
+	public static boolean isValidResponse(Response response, final Fragment frag) {
+		if (response != null) {
+			if ((frag.getActivity() instanceof GenericActivity
+					&& ((GenericActivity) frag.getActivity()).isFinishing()) || !frag.isVisible())
+				return false;
+
+			if (BaseConstants.IS_DEBUGGING)
+				Log.d(BaseConstants.LOG, response.getContent().toString());
+		}
+		else
+			return false;
+
+		return true;
 	}
 }

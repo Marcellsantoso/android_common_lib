@@ -10,6 +10,14 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
+    <ImageView
+        android:id="@+id/imgOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/press_bg" />
+
     <ProgressBar
         android:id="@+id/loader"
         android:layout_width="@dimen/progress_width"

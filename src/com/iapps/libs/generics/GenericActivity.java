@@ -34,7 +34,8 @@ public class GenericActivity extends RoboActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(containerId, frag).addToBackStack(null).commit();
 
-			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+			if (getSupportActionBar() != null)
+				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
 			// Hide keyboard by default
 			BaseUIHelper.hideKeyboard(this);
@@ -52,7 +53,8 @@ public class GenericActivity extends RoboActionBarActivity {
 					.replace(containerId, frag).addToBackStack(null)
 					.commit();
 
-			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+			if (getSupportActionBar() != null)
+				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 			// setSupportProgressBarIndeterminateVisibility(false);
 
 			// Hide keyboard by default when changing fragment
