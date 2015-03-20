@@ -20,9 +20,9 @@ import com.squareup.picasso.RequestCreator;
 
 public class ImageViewLoader extends RelativeLayout {
 
-	private ImageView	image;
+	private ImageView	image, imageOverlay;
 	private ProgressBar	progress;
-	private boolean		isFade	= true;
+	private boolean		isFade	= true, isSquareToWidth = false, isSquareToHeight = false;
 	private long		delay;
 
 	public ImageViewLoader(Context context) {
@@ -37,6 +37,7 @@ public class ImageViewLoader extends RelativeLayout {
 		inflater.inflate(R.layout.image_view_loader, this, true);
 
 		image = (ImageView) this.findViewById(R.id.image);
+		imageOverlay = (ImageView) this.findViewById(R.id.imgOverlay);
 		progress = (ProgressBar) this.findViewById(R.id.loader);
 
 		// Default scale type
@@ -132,6 +133,13 @@ public class ImageViewLoader extends RelativeLayout {
 		this.setOnClickListener(new ListenerClick(listenerDoubleTap));
 	}
 
+	public void setImageOverlay(int res) {
+		if (res == 0)
+			this.imageOverlay.setVisibility(View.GONE);
+		else
+			this.imageOverlay.setImageResource(res);
+	}
+
 	// ================================================================================
 	// Double Tap Functions
 	// ================================================================================
@@ -156,7 +164,34 @@ public class ImageViewLoader extends RelativeLayout {
 			}
 
 		}
-
 	}
 
+	// ================================================================================
+	// Make it always square, adjusting to width
+	// ================================================================================
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		if (isSquareToWidth)
+			super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+		else if (isSquareToHeight)
+			super.onMeasure(heightMeasureSpec, heightMeasureSpec);
+		else
+			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	}
+
+	public boolean isSquareToWidth() {
+		return isSquareToWidth;
+	}
+
+	public boolean isSquareToHeight() {
+		return isSquareToHeight;
+	}
+
+	public void setSquareToWidth(boolean isSquareToWidth) {
+		this.isSquareToWidth = isSquareToWidth;
+	}
+
+	public void setSquareToHeight(boolean isSquareToHeight) {
+		this.isSquareToHeight = isSquareToHeight;
+	}
 }
