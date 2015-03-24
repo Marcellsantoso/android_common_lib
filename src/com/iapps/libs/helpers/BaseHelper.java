@@ -1167,6 +1167,12 @@ public class BaseHelper {
 		return formatter.format(d);
 	}
 
+	public static String formatRupiah(double d) {
+		// Use this weird formatter, because IDR & $ are having different ,. behavior
+		DecimalFormat formatter = new DecimalFormat("'Rp. '#,###_'-'");
+		return formatter.format(d).replace(',', '.').replace('_', ',');
+	}
+
 	public static boolean isValidResponse(Response response, final Fragment frag) {
 		if (response != null) {
 			if ((frag.getActivity() instanceof GenericActivity
