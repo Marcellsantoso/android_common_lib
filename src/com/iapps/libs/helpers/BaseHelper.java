@@ -1221,4 +1221,10 @@ public class BaseHelper {
 		Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
 		context.startActivity(marketIntent);
 	}
+
+	public static void intentDirection(Context context, double latitude, double longitude) {
+		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+				Uri.parse("http://maps.google.com/maps?daddr=" + latitude + "," + longitude));
+		context.startActivity(intent);
+	}
 }

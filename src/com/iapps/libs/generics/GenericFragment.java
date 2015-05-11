@@ -3,9 +3,14 @@ package com.iapps.libs.generics;
 import java.lang.reflect.Field;
 
 import roboguice.fragment.RoboFragment;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
@@ -19,6 +24,47 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 		OnItemClickListener,
 		OnLongClickListener {
 	private static final Field	sChildFragmentManagerField;
+
+	// ================================================================================
+	// Default functions
+	// ================================================================================
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		int resLayout = setLayout();
+		if (resLayout > 0) {
+			View v = inflater.inflate(setLayout(), container, false);
+
+			if (setMenuLayout() > 0)
+				setHasOptionsMenu(true);
+
+			return v;
+		}
+
+		return null;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		setView(view, savedInstanceState);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		int resLayout = setMenuLayout();
+		if (resLayout > 0)
+			inflater.inflate(setMenuLayout(), menu);
+	}
+
+	public abstract int setLayout();
+
+	public abstract void setView(View view, Bundle savedInstanceState);
+
+	public abstract int setMenuLayout();
+
+	// ================================================================================
+	// Utilities
+	// ================================================================================
 
 	// To prevent error in implementing nested fragment
 	static {
@@ -42,12 +88,31 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 		return true;
 	}
 
+	public GenericActivity getHome() {
+		return (GenericActivity) getActivity();
+	}
+
+	// ================================================================================
+	// Title
+	// ================================================================================
 	public void setTitle(int resTitle) {
 		getActivity().setTitle(resTitle);
 	}
 
 	public void setTitle(String title) {
 		getActivity().setTitle(title);
+	}
+
+	// ================================================================================
+	// Popup
+	// ================================================================================
+	public NumberPickerBuilder popupPicker(Fragment targetFragment) {
+		NumberPickerBuilder picker = new NumberPickerBuilder()
+				.setFragmentManager(getChildFragmentManager())
+				.setStyleResId(R.style.BetterPickersDialogFragment)
+				.setTargetFragment(targetFragment);
+
+		return picker;
 	}
 
 	@Override
@@ -63,19 +128,6 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public NumberPickerBuilder popupPicker(Fragment targetFragment) {
-		NumberPickerBuilder picker = new NumberPickerBuilder()
-				.setFragmentManager(getChildFragmentManager())
-				.setStyleResId(R.style.BetterPickersDialogFragment)
-				.setTargetFragment(targetFragment);
-
-		return picker;
-	}
-
-	public GenericActivity getHome() {
-		return (GenericActivity) getActivity();
 	}
 
 	// ================================================================================
@@ -106,4 +158,5 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 		// TODO Auto-generated method stub
 
 	}
+
 }
