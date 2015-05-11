@@ -29,4 +29,17 @@
         <item name="android:windowExitAnimation">@anim/fadeout</item>
     </style>
 
+    <!-- ImageButton -->
+    <style name="imgBtn" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/bg_selectable</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:layout_width">@dimen/min_size</item>
+        <item name="android:layout_height">@dimen/min_size</item>
+    </style>
+    <!-- ListView -->
+    <style name="lv">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:listSelector">@drawable/bg_selectable</item>
+    </style>
+
 </resources>

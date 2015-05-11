@@ -4,11 +4,20 @@ import java.lang.reflect.Field;
 
 import roboguice.fragment.RoboFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.iapps.common_library.R;
+import com.iapps.libs.helpers.BaseConstants;
 
-public class GenericFragment extends RoboFragment {
+public abstract class GenericFragment extends RoboFragment implements OnClickListener,
+		OnItemClickListener,
+		OnLongClickListener {
 	private static final Field	sChildFragmentManagerField;
 
 	// To prevent error in implementing nested fragment
@@ -67,5 +76,34 @@ public class GenericFragment extends RoboFragment {
 
 	public GenericActivity getHome() {
 		return (GenericActivity) getActivity();
+	}
+
+	// ================================================================================
+	// Log
+	// ================================================================================
+	public void log(String text) {
+		if (BaseConstants.IS_DEBUGGING)
+			Log.d(BaseConstants.LOG, text);
+	}
+
+	// ================================================================================
+	// Base Listener
+	// ================================================================================
+	@Override
+	public boolean onLongClick(View v) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+
 	}
 }

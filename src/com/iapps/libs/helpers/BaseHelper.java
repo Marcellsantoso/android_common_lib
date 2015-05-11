@@ -1187,4 +1187,38 @@ public class BaseHelper {
 
 		return true;
 	}
+
+	// ================================================================================
+	// Intent
+	// ================================================================================
+	public static void intentCall(Context context, String number) {
+		if (BaseHelper.isEmpty(number)) {
+			BaseHelper.showAlert(context, R.string.alert_no_phone);
+			return;
+		}
+
+		Intent intent = new Intent(Intent.ACTION_DIAL);
+		intent.setData(Uri.parse("tel:" + number.replace(" ", "")));
+		context.startActivity(intent);
+	}
+
+	public static void intentEmail(Context context, String email, String subject) {
+		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+		emailIntent.setType("plain/text");
+		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+				email
+		});
+		context.startActivity(Intent.createChooser(emailIntent, "Send mail.."));
+	}
+
+	public static void intentWeb(Context context, String url) {
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		context.startActivity(browserIntent);
+	}
+
+	public static void intentPlaystore(Context context, String url) {
+		Uri marketUri = Uri.parse(url);
+		Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+		context.startActivity(marketIntent);
+	}
 }

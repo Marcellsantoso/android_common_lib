@@ -54,6 +54,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -818,11 +819,9 @@ public class BaseUIHelper {
 
 		}
 		catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -1092,5 +1091,38 @@ public class BaseUIHelper {
 						img.setImageResource(R.drawable.ic_cross_dark);
 					}
 				});
+	}
+
+	// ================================================================================
+	// Animation
+	// ================================================================================
+	public static void slideInFromBottom(View view) {
+		BaseUIHelper.slideIn(view, R.anim.up_from_bottom);
+	}
+
+	public static void slideInFromTop(View view) {
+		BaseUIHelper.slideIn(view, R.anim.down_from_top);
+	}
+
+	private static void slideIn(View view, int resAnim) {
+		Animation animation = AnimationUtils.loadAnimation(view.getContext(), resAnim);
+		view.startAnimation(animation);
+		view.setVisibility(View.VISIBLE);
+	}
+
+	public static void slideOutFromTop(final View view) {
+		TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
+		animate.setDuration(400);
+		animate.setFillAfter(true);
+		view.startAnimation(animate);
+		view.setVisibility(View.GONE);
+	}
+
+	public static void slideOutFromBottom(final View view) {
+		TranslateAnimation animate = new TranslateAnimation(0, 0, 0, -view.getHeight());
+		animate.setDuration(500);
+		animate.setFillAfter(true);
+		view.startAnimation(animate);
+		view.setVisibility(View.GONE);
 	}
 }

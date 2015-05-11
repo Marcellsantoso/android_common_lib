@@ -29,5 +29,8 @@
     <string name="font_italic">RobotoCondensed-Italic.ttf</string>
     <string name="font_bold_italic">RobotoCondensed-BoldItalic.ttf</string>
     <string name="font_bold">RobotoCondensed-Bold.ttf</string>
+    
+    <!-- Alert -->
+    <string name="alert_no_phone">No phone number detected</string>
 
 </resources>
