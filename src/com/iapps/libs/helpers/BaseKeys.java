@@ -60,4 +60,9 @@ public class BaseKeys {
 	public static final String	BIG_IMAGE_FOLDER		= "b";
 	public static final String	ORIGINAL_IMAGE_FOLDER	= "o";
 	public static final String	STATUS_MESSAGE			= "status_message";
+	public static final String	FACEBOOK_ID				= "id";
+	public static final String	FACEBOOK_NAME			= "name";
+	public static final String	FACEBOOK_EMAIL			= "email";
+	public static final String	FACEBOOK_GENDER			= "gender";
+	public static final String	FACEBOOK_BDAY			= "birthday";
 }

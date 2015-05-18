@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -1340,6 +1341,13 @@ public class BaseHelper {
 			e.printStackTrace();
 		}
 		return "";
+	}
 
+	// ================================================================================
+	// Facebook Parser
+	// ================================================================================
+	public static Object getObjectFromFacebook(com.facebook.Response m, String key) {
+		Map<String, Object> map = m.getGraphObject().asMap();
+		return map.get(key);
 	}
 }

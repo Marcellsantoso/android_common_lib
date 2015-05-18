@@ -238,7 +238,7 @@ public abstract class HTTPAsyncTask
 		return this;
 	}
 
-	public HTTPAsyncTask setFragment(Fragment fragment) {
+	public HTTPAsyncTask setFragmentAsync(Fragment fragment) {
 		this.fragment = fragment;
 
 		return this;
