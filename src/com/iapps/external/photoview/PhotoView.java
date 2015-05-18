@@ -23,13 +23,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
-import android.widget.ImageView;
 
+import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.iapps.external.photoview.PhotoViewAttacher.OnMatrixChangedListener;
 import com.iapps.external.photoview.PhotoViewAttacher.OnPhotoTapListener;
 import com.iapps.external.photoview.PhotoViewAttacher.OnViewTapListener;
 
-public class PhotoView extends ImageView implements IPhotoView {
+public class PhotoView extends KenBurnsView implements IPhotoView {
 
     private PhotoViewAttacher mAttacher;
 
@@ -47,6 +47,9 @@ public class PhotoView extends ImageView implements IPhotoView {
         super(context, attr, defStyle);
         super.setScaleType(ScaleType.MATRIX);
         init();
+        
+        // Pause by default
+        this.pause();
     }
 
     protected void init() {

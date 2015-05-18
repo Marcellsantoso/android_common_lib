@@ -5,8 +5,13 @@ import android.os.Parcelable;
 
 public class SimpleBean implements SimpleObjectInterface, Parcelable {
 
-	private int id;
-	private String name;
+	private int		id;
+	private String	name;
+
+	public SimpleBean() {
+		this.id = 0;
+		this.name = "";
+	}
 
 	public SimpleBean(int id, String name) {
 		this.id = id;
@@ -16,6 +21,18 @@ public class SimpleBean implements SimpleObjectInterface, Parcelable {
 	public SimpleBean(Parcel in) {
 		this.id = in.readInt();
 		this.name = in.readString();
+	}
+
+	public SimpleBean setName(String name) {
+		this.name = name;
+
+		return this;
+	}
+
+	public SimpleBean setId(int id) {
+		this.id = id;
+
+		return this;
 	}
 
 	@Override
@@ -50,17 +67,18 @@ public class SimpleBean implements SimpleObjectInterface, Parcelable {
 		out.writeString(name);
 	}
 
-	public static final Creator<SimpleBean> CREATOR = new Creator<SimpleBean>() {
-		@Override
-		public SimpleBean createFromParcel(final Parcel source) {
-			return new SimpleBean(source);
-		}
+	public static final Creator<SimpleBean>	CREATOR	= new Creator<SimpleBean>() {
+														@Override
+														public SimpleBean createFromParcel(
+																final Parcel source) {
+															return new SimpleBean(source);
+														}
 
-		@Override
-		public SimpleBean[] newArray(final int size) {
-			return new SimpleBean[size];
-		}
-	};
+														@Override
+														public SimpleBean[] newArray(final int size) {
+															return new SimpleBean[size];
+														}
+													};
 
 	@Override
 	public String toString() {

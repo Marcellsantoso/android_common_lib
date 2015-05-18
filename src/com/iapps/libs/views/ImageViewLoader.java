@@ -8,11 +8,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.iapps.common_library.R;
 import com.iapps.external.photoview.PhotoView;
 import com.iapps.libs.helpers.BaseUIHelper;
@@ -169,7 +171,7 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	// ================================================================================
 	// Getter & Setter
 	// ================================================================================
-	public ImageView getImage() {
+	public PhotoView getImage() {
 		return image;
 	}
 
@@ -231,6 +233,23 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	// ================================================================================
 	public void setZoomable(boolean isZoomable) {
 		this.image.setZoomable(isZoomable);
+	}
+
+	// ================================================================================
+	// Kenburn
+	// ================================================================================
+	public void startKenburn() {
+		this.image.resume();
+	}
+
+	public void startKenburn(long duration, Interpolator interpolator) {
+		RandomTransitionGenerator generator = new RandomTransitionGenerator(duration, interpolator);
+		this.image.setTransitionGenerator(generator);
+		this.image.resume();
+	}
+
+	public void stopKenburn() {
+		this.image.pause();
 	}
 
 	// ================================================================================

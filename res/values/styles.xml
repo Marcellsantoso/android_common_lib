@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -36,10 +36,39 @@
         <item name="android:layout_width">@dimen/min_size</item>
         <item name="android:layout_height">@dimen/min_size</item>
     </style>
+
+    <style name="btn" parent="android:Widget.Holo.Light.Button">
+        <item name="android:minHeight">@dimen/min_size_small</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="btn_blue_fb" parent="btn">
+        <item name="android:background">@drawable/btn_blue_xml</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="btn_white" parent="btn">
+        <item name="android:background">@drawable/btn_white_xml</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
+
+    <style name="btn_transparent" parent="btn">
+        <item name="android:background">@drawable/bg_selectable</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
     <!-- ListView -->
     <style name="lv">
         <item name="android:clipToPadding">false</item>
         <item name="android:listSelector">@drawable/bg_selectable</item>
+    </style>
+
+    <style name="edt_light">
+        <item name="floating_edit_text_color">@color/Gray</item>
+        <item name="floating_edit_text_highlighted_color">@color/LightGrey</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:tint">@color/Gray</item>
+        <item name="android:textCursorDrawable" tools:targetApi="12">@null</item>
+        <item name="android:textColorHint">@color/Gray</item>
     </style>
 
 </resources>

@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,11 +38,18 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -1226,5 +1235,77 @@ public class BaseHelper {
 		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 				Uri.parse("http://maps.google.com/maps?daddr=" + latitude + "," + longitude));
 		context.startActivity(intent);
+	}
+
+	// ================================================================================
+	// Spannable Text
+	// ================================================================================
+	public static Spannable bold(String text, int from, int to) {
+		Spannable span = new SpannableString(text);
+
+		return BaseHelper.bold(span, from, to);
+	}
+
+	public static Spannable bold(Spannable text, int from, int to) {
+		text.setSpan(new StyleSpan(Typeface.BOLD),
+				from, to,
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+		return text;
+	}
+
+	public static Spannable fontSize(String text, int from, int to, int size) {
+		Spannable span = new SpannableString(text);
+		return BaseHelper.fontSize(span, from, to, size);
+	}
+
+	public static Spannable fontSize(Spannable text, int from, int to, int size) {
+		text.setSpan(new AbsoluteSizeSpan(size),
+				from, to, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+		return text;
+	}
+
+	public static Spannable fontColor(String text, int from, int to, String color) {
+		return BaseHelper.fontColor(new SpannableString(text), from, to, color);
+	}
+
+	public static Spannable fontColor(Spannable span, int from, int to, String color) {
+		if(!color.startsWith("#"))
+			color = "#" + color;
+		
+		span.setSpan(new ForegroundColorSpan(Color.parseColor(color)), from, to,
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return span;
+	}
+
+	// ================================================================================
+	// Encrypt
+	// ================================================================================
+	public static String encryptMd5(String text) {
+		final String MD5 = "MD5";
+		try {
+			// Create MD5 Hash
+			MessageDigest digest = java.security.MessageDigest
+					.getInstance(MD5);
+			digest.update(text.getBytes());
+			byte messageDigest[] = digest.digest();
+
+			// Create Hex String
+			StringBuilder hexString = new StringBuilder();
+			for (byte aMessageDigest : messageDigest) {
+				String h = Integer.toHexString(0xFF & aMessageDigest);
+				while (h.length() < 2)
+					h = "0" + h;
+				hexString.append(h);
+			}
+			return hexString.toString();
+
+		}
+		catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return "";
+
 	}
 }

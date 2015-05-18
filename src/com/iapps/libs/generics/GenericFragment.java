@@ -58,9 +58,9 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 
 	public abstract int setLayout();
 
-	public abstract void setView(View view, Bundle savedInstanceState);
-
 	public abstract int setMenuLayout();
+
+	public abstract void setView(View view, Bundle savedInstanceState);
 
 	// ================================================================================
 	// Utilities
@@ -101,6 +101,24 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 
 	public void setTitle(String title) {
 		getActivity().setTitle(title);
+	}
+
+	// ================================================================================
+	// Fragment
+	// ================================================================================
+	public void clearFragment() {
+		if (getHome() != null)
+			getHome().clearFragment();
+	}
+
+	public void setFragment(Fragment frag) {
+		if (getHome() != null)
+			getHome().setFragment(frag);
+	}
+
+	public void setFragment(Fragment frag, int resParent) {
+		if (getHome() != null)
+			getHome().setFragment(resParent, frag);
 	}
 
 	// ================================================================================

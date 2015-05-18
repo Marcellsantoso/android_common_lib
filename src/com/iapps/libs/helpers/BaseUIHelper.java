@@ -1096,21 +1096,21 @@ public class BaseUIHelper {
 	// ================================================================================
 	// Animation
 	// ================================================================================
-	public static void slideInFromBottom(View view) {
-		BaseUIHelper.slideIn(view, R.anim.up_from_bottom);
+	public static void animSlideInFromBottom(View view) {
+		BaseUIHelper.animSlideIn(view, R.anim.up_from_bottom);
 	}
 
-	public static void slideInFromTop(View view) {
-		BaseUIHelper.slideIn(view, R.anim.down_from_top);
+	public static void animSlideInFromTop(View view) {
+		BaseUIHelper.animSlideIn(view, R.anim.down_from_top);
 	}
 
-	private static void slideIn(View view, int resAnim) {
+	private static void animSlideIn(View view, int resAnim) {
 		Animation animation = AnimationUtils.loadAnimation(view.getContext(), resAnim);
 		view.startAnimation(animation);
 		view.setVisibility(View.VISIBLE);
 	}
 
-	public static void slideOutFromTop(final View view) {
+	public static void animSlideOutFromTop(final View view) {
 		TranslateAnimation animate = new TranslateAnimation(0, 0, 0, view.getHeight());
 		animate.setDuration(400);
 		animate.setFillAfter(true);
@@ -1118,11 +1118,31 @@ public class BaseUIHelper {
 		view.setVisibility(View.GONE);
 	}
 
-	public static void slideOutFromBottom(final View view) {
+	public static void animSlideOutFromBottom(final View view) {
 		TranslateAnimation animate = new TranslateAnimation(0, 0, 0, -view.getHeight());
 		animate.setDuration(500);
 		animate.setFillAfter(true);
 		view.startAnimation(animate);
 		view.setVisibility(View.GONE);
+	}
+
+	public static void animRotate(View view) {
+		Animation animRotate = AnimationUtils.loadAnimation(view.getContext(),
+				R.anim.rotate);
+		view.startAnimation(animRotate);
+	}
+
+	public static void animFadeIn(View view) {
+		BaseUIHelper.animate(view, R.anim.fadein);
+	}
+
+	public static void animFadeOut(View view) {
+		BaseUIHelper.animate(view, R.anim.fadeout);
+	}
+
+	public static void animate(View view, int resAnim) {
+		Animation animFadein = AnimationUtils.loadAnimation(view.getContext(),
+				resAnim);
+		view.startAnimation(animFadein);
 	}
 }
