@@ -25,7 +25,7 @@ public class BaseConstants {
 	public static final String	TEMP_PHOTO_FILE			= "tmp.JPEG";
 	public static final String	DATE_YMD				= "yyyy-MM-dd";
 	public static final String	DATE_MD					= "dd MMM";
-	public static final String	DATE_MDY				= DATE_MD + " yyyy";
+	public static final String	DATE_MDY				= DATE_MD + ", yyyy";
 	public static final String	DATE_EDMY				= "EE, dd MMMM yy";
 	public static final String	DATE_EDMYHMS			= "EE, dd MMMM yyyy HH:mm:ss";
 	public static final String	DATE_HA					= "h a";

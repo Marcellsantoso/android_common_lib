@@ -36,6 +36,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -44,12 +45,14 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -1153,6 +1156,30 @@ public class BaseHelper {
 		return ver;
 	}
 
+	public static String getHashKey(Context ctx) {
+		try {
+			PackageInfo info = ctx.getPackageManager().getPackageInfo(
+					ctx.getPackageName(), PackageManager.GET_SIGNATURES);
+			for (Signature signature : info.signatures) {
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				md.update(signature.toByteArray());
+				String key = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+				Log.d("KeyHash:", key);
+
+				return key;
+			}
+		}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
+
+		}
+		catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
 	/**
 	 * Format distance to be displayed to the user
 	 * 
@@ -1195,6 +1222,13 @@ public class BaseHelper {
 			return false;
 
 		return true;
+	}
+
+	public static String getMobileNumber(Context ctx) {
+		TelephonyManager mTelephonyMgr;
+		mTelephonyMgr = (TelephonyManager)
+				ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		return mTelephonyMgr.getLine1Number();
 	}
 
 	// ================================================================================
@@ -1271,9 +1305,9 @@ public class BaseHelper {
 	}
 
 	public static Spannable fontColor(Spannable span, int from, int to, String color) {
-		if(!color.startsWith("#"))
+		if (!color.startsWith("#"))
 			color = "#" + color;
-		
+
 		span.setSpan(new ForegroundColorSpan(Color.parseColor(color)), from, to,
 				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return span;
