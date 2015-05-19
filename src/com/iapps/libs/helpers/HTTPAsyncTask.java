@@ -35,6 +35,7 @@ import javax.net.ssl.X509TrustManager;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.iapps.libs.objects.Response;
 
@@ -90,6 +91,10 @@ public abstract class HTTPAsyncTask
 		}
 
 		return this;
+	}
+
+	public HTTPAsyncTask setGetParams(String key, EditText edt) {
+		return setGetParams(key, edt.getText().toString());
 	}
 
 	public HTTPAsyncTask setGetParams(String key, String value) {
@@ -168,6 +173,10 @@ public abstract class HTTPAsyncTask
 
 	public void setEnableSSLCheck(boolean isDisableSSLCheck) {
 		this.isEnableSSLCheck = isDisableSSLCheck;
+	}
+
+	public HTTPAsyncTask setPostParams(String key, EditText edt) {
+		return setPostParams(key, edt.getText().toString());
 	}
 
 	public HTTPAsyncTask setPostParams(String key, String value) {

@@ -16,7 +16,7 @@ import com.facebook.SessionLoginBehavior;
 import com.facebook.SessionState;
 import com.iapps.common_library.R;
 
-public class FacebookLogin {
+public abstract class FacebookLogin {
 	private String			fbAppId			= "";
 
 	/**
@@ -26,12 +26,10 @@ public class FacebookLogin {
 	Session.StatusCallback	statusCallback	= new SessionStatusCallback();
 	private boolean			isFBAsyncRunning;
 	private Fragment		frag;
-	ListenerFacebook		callback;
 
-	public FacebookLogin(String fbAppId, ListenerFacebook callback, Fragment frag) {
+	public FacebookLogin(String fbAppId, Fragment frag) {
 		this.fbAppId = fbAppId;
 		this.frag = frag;
-		this.callback = callback;
 	}
 
 	public void execute() {
@@ -79,7 +77,6 @@ public class FacebookLogin {
 	}
 
 	private void showFBError() {
-		// Helper.showAlert(getActivity(), "Error", "Facebook connection error");
 		Session.getActiveSession().closeAndClearTokenInformation();
 		Session session = new Session.Builder(frag.getActivity()).setApplicationId(fbAppId).build();
 		Session.setActiveSession(session);
@@ -135,32 +132,32 @@ public class FacebookLogin {
 			if (result != null && result.size() > 0) {
 				try {
 					Response m = result.get(0);
-					callback.onFbLoginSuccess(m);
+					onFbLoginSuccess(m);
 				}
 				catch (NullPointerException e) {
-					callback.onFbLoginFail(e.getMessage());
+					onFbLoginFail(e.getMessage());
 					showFBError();
 					e.printStackTrace();
 				}
 				catch (IndexOutOfBoundsException e) {
-					callback.onFbLoginFail(e.getMessage());
+					onFbLoginFail(e.getMessage());
 					showFBError();
 					e.printStackTrace();
 				}
 
 			}
 			else {
-				callback.onFbLoginFail(frag.getActivity().getString(
+				onFbLoginFail(frag.getActivity().getString(
 						R.string.iapps__unknown_response));
 			}
 
 		}
 	}
 
-	public interface ListenerFacebook {
-		public void onFbLoginSuccess(Response response);
+	public abstract void onFbLoginSuccess(Response response);
 
-		public void onFbLoginFail(String message);
+	public void onFbLoginFail(String message) {
+		BaseHelper.showAlert(frag.getActivity(), message);
 	}
 
 }

@@ -56,7 +56,7 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 				if (json.getInt(BaseKeys.STATUS_CODE) == 1) {
 					onSuccess(json);
 				} else {
-					onFail(json.getString(BaseKeys.STATUS_MESSAGE));
+					onFail(json);
 				}
 
 			}
@@ -71,6 +71,16 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 	}
 
 	public abstract void onSuccess(JSONObject j);
+
+	public void onFail(JSONObject j) {
+		try {
+			onFail(j.getString(BaseKeys.STATUS_MESSAGE));
+		}
+		catch (JSONException e) {
+			onFail(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 	public void onFail(String message) {
 		if (ld != null)
