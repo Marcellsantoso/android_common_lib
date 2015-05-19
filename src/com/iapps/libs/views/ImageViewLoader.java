@@ -2,9 +2,14 @@ package com.iapps.libs.views;
 
 import java.util.Calendar;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -316,6 +321,24 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 
 	public void setSquareToHeight(boolean isSquareToHeight) {
 		this.isSquareToHeight = isSquareToHeight;
+	}
+
+	// ================================================================================
+	// Convert to upload format
+	// ================================================================================
+	public String getUploadFormat() {
+		Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+		if (bitmap != null) {
+			showProgress();
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+			byte[] image = stream.toByteArray();
+
+			hideProgress();
+			return Base64.encodeToString(image, 0);
+		}
+
+		return "";
 	}
 
 }

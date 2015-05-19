@@ -71,4 +71,10 @@
         <item name="android:textColorHint">@color/Gray</item>
     </style>
 
+    <!-- RadioButton -->
+    <!-- Radio Button -->
+    <style name="radio_white" parent="android:Theme.Holo.Light">
+        <item name="android:listChoiceIndicatorSingle">@drawable/radio_white</item>
+    </style>
+
 </resources>

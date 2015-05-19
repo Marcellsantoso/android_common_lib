@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.facebook.Request;
@@ -25,9 +24,8 @@ public class FacebookLogin {
 	 * onActivityResult
 	 */
 	Session.StatusCallback	statusCallback	= new SessionStatusCallback();
-	public Bundle			facebookBundle;
-	public boolean			isFBAsyncRunning;
-	Fragment				frag;
+	private boolean			isFBAsyncRunning;
+	private Fragment		frag;
 	ListenerFacebook		callback;
 
 	public FacebookLogin(String fbAppId, ListenerFacebook callback, Fragment frag) {
@@ -36,7 +34,7 @@ public class FacebookLogin {
 		this.callback = callback;
 	}
 
-	public void signUpByFacebook() {
+	public void execute() {
 		Session session = new Session.Builder(frag.getActivity()).setApplicationId(
 				fbAppId).build();
 		Session.setActiveSession(session);
@@ -164,4 +162,5 @@ public class FacebookLogin {
 
 		public void onFbLoginFail(String message);
 	}
+
 }

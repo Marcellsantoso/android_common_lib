@@ -23,6 +23,7 @@ public class BaseConstants {
 	public static final String	MIME_PNG				= "image/PNG";
 	public static final String	MIME_CSV				= "text/csv";
 	public static final String	TEMP_PHOTO_FILE			= "tmp.JPEG";
+	public static final String	DATE_JSON				= "yyyy-MM-dd";
 	public static final String	DATE_YMD				= "yyyy-MM-dd";
 	public static final String	DATE_MD					= "dd MMM";
 	public static final String	DATE_MDY				= DATE_MD + ", yyyy";
@@ -32,6 +33,7 @@ public class BaseConstants {
 	public static final String	DATE_HMA				= "h mm a";
 	public static final String	DATE_YMDHIS				= "yyyy-MM-dd HH:mm:ss";
 	public static final String	DATE_YMDHIS_GMT			= "yyyy-MM-dd HH:mm:ss";
+	public static final String	DATE_FACEBOOK			= "MM/dd/yyyy";
 	public static final String	YES						= "Y";
 	public static final String	NO						= "N";
 	public static final String	NOT_APPLICABLE			= "NA";
@@ -48,4 +50,9 @@ public class BaseConstants {
 	// Debug state
 	public static final boolean	IS_DEBUGGING			= true;
 	public static final String	LOG						= "log";
+
+	// ================================================================================
+	// DatePicker
+	// ================================================================================
+	public static final String	KEY_DATETIMEPICKER		= "dtpicker";
 }

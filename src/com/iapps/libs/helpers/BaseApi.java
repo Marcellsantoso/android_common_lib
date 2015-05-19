@@ -13,4 +13,6 @@ public class BaseApi {
 		return _api;
 	}
 
+	public static final String	FB_GRAPH	= "https://graph.facebook.com/";
+
 }

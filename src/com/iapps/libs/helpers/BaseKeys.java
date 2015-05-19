@@ -62,7 +62,14 @@ public class BaseKeys {
 	public static final String	STATUS_MESSAGE			= "status_message";
 	public static final String	FACEBOOK_ID				= "id";
 	public static final String	FACEBOOK_NAME			= "name";
+	public static final String	FACEBOOK_FIRST_NAME		= "first_name";
+	public static final String	FACEBOOK_LAST_NAME		= "last_name";
 	public static final String	FACEBOOK_EMAIL			= "email";
 	public static final String	FACEBOOK_GENDER			= "gender";
+	public static final String	FACEBOOK_MALE			= "male";
+	public static final String	FACEBOOK_FEMALE			= "female";
 	public static final String	FACEBOOK_BDAY			= "birthday";
+	public static final String	FACEBOOK_PICTURE		= "picture";
+	public static final String	TYPE					= "type";
+	public static final String	LARGE					= "large";
 }

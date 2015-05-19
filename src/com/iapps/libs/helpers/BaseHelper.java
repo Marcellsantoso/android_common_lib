@@ -46,6 +46,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.text.Spannable;
@@ -60,6 +61,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.iapps.common_library.R;
 import com.iapps.libs.generics.GenericActivity;
 import com.iapps.libs.objects.Response;
@@ -1350,4 +1354,49 @@ public class BaseHelper {
 		Map<String, Object> map = m.getGraphObject().asMap();
 		return map.get(key);
 	}
+
+	// ================================================================================
+	// Picker
+	// ================================================================================
+	public static void datePicker(OnDateSetListener listener, FragmentManager manager) {
+		DateTime dt = DateTime.now();
+		DatePickerDialog picker = DatePickerDialog.newInstance(listener, dt.getYear(),
+				dt.getMonthOfYear() - 1,
+				dt.getDayOfMonth());
+		picker.setDateRange(dt.getYear() - 100, dt.getMonthOfYear(),
+				dt.getDayOfMonth(),
+				dt.getYear(), dt.getMonthOfYear() - 1, dt.getDayOfMonth());
+		picker.show(manager, BaseConstants.KEY_DATETIMEPICKER);
+	}
+
+	public static NumberPickerBuilder betterPicker(Fragment frag) {
+		NumberPickerBuilder picker = new NumberPickerBuilder()
+				.setFragmentManager(frag.getChildFragmentManager())
+				.setStyleResId(R.style.BetterPickersDialogFragment)
+				.setTargetFragment(frag);
+
+		return picker;
+	}
+
+	public static void numberPicker(Fragment frag, int tag) {
+		BaseHelper.betterPicker(frag).setDisplayAsPassword(false)
+				.setDecimalVisibility(View.GONE)
+				.setPlusMinusVisibility(View.GONE).setAllowZero(true)
+				.setReference(tag).show();
+	}
+
+	// ================================================================================
+	// Validate
+	// ================================================================================
+	public static boolean validateEditTexts(EditText[] alEdt) {
+		for (EditText editText : alEdt) {
+			if (BaseHelper.isEmpty(editText)) {
+				BaseHelper.showRequired(editText.getContext(), editText.getHint().toString());
+
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

@@ -55,25 +55,27 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 			try {
 				if (json.getInt(BaseKeys.STATUS_CODE) == 1) {
 					onSuccess(json);
-				} else
-					BaseHelper.showAlert(fragment.getActivity(),
-							json.getString(BaseKeys.STATUS_MESSAGE));
+				} else {
+					onFail(json.getString(BaseKeys.STATUS_MESSAGE));
+				}
+
 			}
 			catch (JSONException e) {
-				if (ld != null)
-					ld.showError("", e.getMessage());
-				else
-					BaseHelper.showAlert(fragment.getActivity(), e.getMessage());
+				onFail(e.getMessage());
 				e.printStackTrace();
 			}
 		} else {
 			// Failed to parse JSON
-			if (ld != null)
-				ld.showUnknownResponse();
-			else
-				BaseHelper.showUnknownResponseError(fragment.getActivity());
+			onFail(fragment.getString(R.string.iapps__unknown_response));
 		}
 	}
 
 	public abstract void onSuccess(JSONObject j);
+
+	public void onFail(String message) {
+		if (ld != null)
+			ld.showError("", message);
+		else
+			BaseHelper.showAlert(fragment.getActivity(), message);
+	};
 }
