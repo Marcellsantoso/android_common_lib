@@ -16,8 +16,9 @@
 -->
 
 <resources>
+
     <color name="pressed_apptheme">#CC4C9EB6</color>
-	<color name="transparent">#00000000</color>
+    <color name="transparent">#00000000</color>
     <color name="android_green">#FFA4C639</color>
     <color name="honeycombish_blue">#FF58BAED</color>
     <color name="soft_transparent_grey">#77DDDDDD</color>
@@ -170,5 +171,22 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+
+    <!-- DateTimePicker -->
+    <color name="white">#ffffffff</color>
+    <color name="circle_background">#fff2f2f2</color>
+    <color name="line_background">#ffcccccc</color>
+    <color name="done_text_color_normal">#ff333333</color>
+    <color name="done_text_color_disabled">#ffcccccc</color>
+    <color name="blue">#ff33b5e5</color>
+    <color name="darker_blue">#ff0099cc</color>
+    <color name="date_picker_text_normal">#ff999999</color>
+    <color name="date_picker_text_disabled">#ffcccccc</color>
+    <color name="calendar_header">#ff999999</color>
+    <color name="date_picker_view_animator">#fff2f2f2</color>
+    <color name="ampm_text_color">#8c8c8c</color>
+    <color name="numbers_text_color">#8c8c8c</color>
+    <color name="numbers_disable_text_color">#e3e3e3</color>
+    <color name="transparent_black">#7F000000</color>
 
 </resources>

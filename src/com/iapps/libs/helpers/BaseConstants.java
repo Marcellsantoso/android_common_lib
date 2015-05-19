@@ -48,4 +48,7 @@ public class BaseConstants {
 	// Debug state
 	public static final boolean	IS_DEBUGGING			= true;
 	public static final String	LOG						= "log";
+
+	// picker
+	public static final String	KEY_DATETIMEPICKER		= "dtpicker";
 }

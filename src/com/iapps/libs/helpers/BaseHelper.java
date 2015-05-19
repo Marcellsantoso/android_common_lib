@@ -46,6 +46,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.text.Spannable;
@@ -61,6 +62,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iapps.common_library.R;
+import com.iapps.external.datetimepicker.datepicker.date.DatePickerDialog;
+import com.iapps.external.datetimepicker.datepicker.date.DatePickerDialog.OnDateSetListener;
 import com.iapps.libs.generics.GenericActivity;
 import com.iapps.libs.objects.Response;
 import com.iapps.libs.views.LoadingCompound;
@@ -1349,5 +1352,19 @@ public class BaseHelper {
 	public static Object getObjectFromFacebook(com.facebook.Response m, String key) {
 		Map<String, Object> map = m.getGraphObject().asMap();
 		return map.get(key);
+	}
+
+	// ================================================================================
+	// Pickers
+	// ================================================================================
+	public static void datePicker(OnDateSetListener listener, FragmentManager fragManager) {
+		DateTime dt = DateTime.now();
+		DatePickerDialog picker = DatePickerDialog.newInstance(listener, dt.getYear(),
+				dt.getMonthOfYear() - 1,
+				dt.getDayOfMonth());
+		picker.setDateRange(dt.getYear() - 100, dt.getMonthOfYear(),
+				dt.getDayOfMonth(),
+				dt.getYear(), dt.getMonthOfYear() - 1, dt.getDayOfMonth());
+		picker.show(fragManager, BaseConstants.KEY_DATETIMEPICKER);
 	}
 }
