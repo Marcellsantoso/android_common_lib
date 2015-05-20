@@ -37,6 +37,7 @@ public class BaseKeys {
 	public static final String	PHOTO					= "photo";
 	public static final String	CONTACT					= "contact";
 	public static final String	EMAIL					= "email";
+	public static final String	SEARCH					= "search";
 	public static final String	REMARKS					= "remarks";
 	public static final String	HOURS					= "hours";
 	public static final String	ACCOUNTS				= "accounts";

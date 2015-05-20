@@ -44,6 +44,7 @@ public abstract class FacebookImage {
 				img.getImage().setImageBitmap(
 						BitmapFactory.decodeByteArray(bAvatar, 0, bAvatar.length));
 				img.hideProgress();
+				onSuccess(bAvatar);
 			}
 			else {
 				BaseHelper.showUnknownResponseError(img.getContext());

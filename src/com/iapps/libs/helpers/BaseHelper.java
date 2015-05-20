@@ -1399,4 +1399,26 @@ public class BaseHelper {
 		return true;
 	}
 
+	// ================================================================================
+	// Server
+	// ================================================================================
+	public static String toSearchQuery(String key, EditText edt) {
+		return BaseHelper.toSearchQuery(key, edt.getText().toString(), BaseConstants.EXACT);
+	}
+
+	public static String toSearchQuery(String key, EditText edt, String type) {
+		return BaseHelper.toSearchQuery(key, edt.getText().toString(), type);
+	}
+
+	public static String toSearchQuery(String key, String value) {
+		return BaseHelper.toSearchQuery(key, value, BaseConstants.EXACT);
+	}
+
+	public static String toSearchQuery(String key, String value, String type) {
+		if (BaseHelper.isEmpty(key) || BaseHelper.isEmpty(value) || BaseHelper.isEmpty(type)) {
+			return "";
+		}
+
+		return key + "," + value + "," + type + ";";
+	}
 }

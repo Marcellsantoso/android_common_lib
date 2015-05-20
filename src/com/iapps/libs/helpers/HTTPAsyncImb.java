@@ -16,15 +16,30 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 	private boolean			displayProgress;
 	private ProgressDialog	mDialog;
 
-	public HTTPAsyncImb(Fragment frag, LoadingCompound ld, boolean displayProgress) {
+	public HTTPAsyncImb(Fragment frag, LoadingCompound ld) {
 		this.fragment = frag;
 		this.ld = ld;
-		this.displayProgress = displayProgress;
+		setDefaultValue();
 	}
 
 	public HTTPAsyncImb(Fragment frag, boolean displayProgress) {
 		this.fragment = frag;
 		this.displayProgress = displayProgress;
+		setDefaultValue();
+	}
+
+	public void setDefaultValue() {
+		if (!BaseHelper.isEmpty(url()))
+			setUrl(url());
+
+		if (!BaseHelper.isEmpty(search()))
+			setGetParams(BaseKeys.SEARCH, search());
+
+		if (page() > 0)
+			setGetParams(BaseKeys.PAGE, page());
+
+		if (limit() >= 0)
+			setGetParams(BaseKeys.LIMIT, limit());
 	}
 
 	@Override
@@ -77,7 +92,6 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 			onFail(j.getString(BaseKeys.STATUS_MESSAGE));
 		}
 		catch (JSONException e) {
-			onFail(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -88,4 +102,18 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 		else
 			BaseHelper.showAlert(fragment.getActivity(), message);
 	};
+
+	public int limit() {
+		return BaseConstants.DEFAULT_LIMIT;
+	}
+
+	public int page() {
+		return BaseConstants.DEFAULT_PAGE;
+	}
+
+	public abstract String url();
+
+	public String search() {
+		return "";
+	}
 }

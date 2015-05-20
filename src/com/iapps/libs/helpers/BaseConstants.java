@@ -55,4 +55,12 @@ public class BaseConstants {
 	// DatePicker
 	// ================================================================================
 	public static final String	KEY_DATETIMEPICKER		= "dtpicker";
+
+	// ================================================================================
+	// Webservice
+	// ================================================================================
+	public static final String	EXACT					= "exact";
+	public static final String	START					= "start";
+	public static final String	END						= "end";
+	public static final String	ANYWHERE				= "anywhere";
 }

@@ -40,6 +40,7 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	private boolean			isFade	= true, isSquareToWidth = false,
 									isSquareToHeight = false, popup = false;
 	private long			delay;
+	private int				placeholder;
 	private ListenerLoad	listenerLoad;
 
 	public ImageViewLoader(Context context) {
@@ -71,8 +72,10 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	}
 
 	public void showFail() {
-		image.setScaleType(ScaleType.CENTER);
-		image.setImageResource(R.drawable.ic_cross_light);
+		if (placeholder == 0) {
+			image.setScaleType(ScaleType.CENTER);
+			image.setImageResource(R.drawable.ic_cross_light);
+		}
 	}
 
 	// ================================================================================
@@ -120,6 +123,8 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	}
 
 	public void loadImage(String url, int resPlaceHolder, Transformation transformation) {
+		this.placeholder = resPlaceHolder;
+
 		if (this.image != null && this.progress != null) {
 			RequestCreator imageLoader = Picasso
 					.with(this.getContext())
@@ -299,11 +304,13 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	// ================================================================================
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		if (isSquareToWidth)
+		if (isSquareToWidth) {
 			super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-		else if (isSquareToHeight)
+			image.getLayoutParams().height = widthMeasureSpec;
+		} else if (isSquareToHeight) {
 			super.onMeasure(heightMeasureSpec, heightMeasureSpec);
-		else
+			image.getLayoutParams().width = heightMeasureSpec;
+		} else
 			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 
