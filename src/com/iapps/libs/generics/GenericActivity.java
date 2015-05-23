@@ -6,8 +6,9 @@ import android.support.v4.app.FragmentManager;
 import com.iapps.libs.helpers.BaseUIHelper;
 import com.verano.actionbar4guice.activity.RoboActionBarActivity;
 
-public class GenericActivity extends RoboActionBarActivity {
-	int	containerId	= 0;
+public class GenericActivity
+	extends RoboActionBarActivity {
+	int containerId = 0;
 
 	// ================================================================================
 	// Fragment Functions
@@ -85,13 +86,11 @@ public class GenericActivity extends RoboActionBarActivity {
 	 */
 	@Override
 	public void onBackPressed() {
-		// Remove circle loading progress on top right corner
-		setSupportProgressBarIndeterminateVisibility(false);
-
 		// Only close apps when there's no backstack
 		if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
 			finish();
-		} else {
+		}
+		else {
 			super.onBackPressed();
 		}
 	}

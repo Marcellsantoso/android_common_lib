@@ -1,16 +1,16 @@
 package com.iapps.libs.generics;
 
-import com.iapps.common_library.R;
-
 import roboguice.inject.InjectView;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class GenericListFragment extends ActionBarActivity {
+import com.iapps.common_library.R;
+import com.verano.actionbar4guice.activity.RoboActionBarActivity;
+
+public class GenericListFragment extends RoboActionBarActivity {
 
 	@InjectView(tag="listViewListGeneric") protected ListView lvList;
 	 
