@@ -2,7 +2,6 @@ package com.iapps.libs.helpers;
 
 import org.joda.time.DateTime;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,11 +13,11 @@ import com.iapps.common_library.R;
 
 public abstract class NotificationGenerator {
 	Context ctx;
-	Activity act;
+	Class<?> cls;
 
-	public NotificationGenerator(Activity activity) {
-		this.act = activity;
-		this.ctx = act.getApplicationContext();
+	public NotificationGenerator(Context ctx, Class<?> cls) {
+		this.ctx = ctx;
+		this.cls = cls;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -28,7 +27,7 @@ public abstract class NotificationGenerator {
 		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 		Notification notification;
 
-		Intent intent = new Intent(ctx, act.getClass());
+		Intent intent = new Intent(ctx, cls);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
 				intent, 0);
 
