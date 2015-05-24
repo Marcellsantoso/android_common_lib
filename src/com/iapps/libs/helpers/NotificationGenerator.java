@@ -42,11 +42,17 @@ public abstract class NotificationGenerator {
 		else {
 			NotificationCompat.Builder builder = new NotificationCompat.Builder(
 					ctx);
-			notification = builder.setContentIntent(contentIntent)
+			builder = builder.setContentIntent(contentIntent)
 					.setSmallIcon(icon()).setTicker(title()).setWhen(when())
 					.setAutoCancel(true).setContentTitle(title())
-					.setContentText(content()).build();
+					.setContentText(content());
+			if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP && color() > 0)
+				builder.setColor(ctx.getResources().getColor(color()));
 
+			if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP)
+				builder.setSmallIcon(iconLollipop());
+
+			notification = builder.build();
 			notificationManager.notify((int) when(), notification);
 		}
 
@@ -61,10 +67,18 @@ public abstract class NotificationGenerator {
 		return R.drawable.ic_launcher;
 	}
 
+	public int iconLollipop() {
+		return R.drawable.ic_launcher;
+	}
+
 	public abstract String content();
 
 	public long when() {
 		return DateTime.now().getMillis();
+	}
+
+	public int color() {
+		return 0;
 	}
 
 }
