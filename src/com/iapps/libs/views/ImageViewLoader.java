@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.iapps.common_library.R;
 import com.iapps.external.photoview.PhotoView;
+import com.iapps.libs.helpers.BaseConstants;
 import com.iapps.libs.helpers.BaseUIHelper;
 import com.iapps.libs.helpers.CircleTransform;
 import com.iapps.libs.helpers.RoundedShadowTransform;
@@ -32,7 +34,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
-public class ImageViewLoader extends RelativeLayout implements View.OnClickListener {
+public class ImageViewLoader
+	extends RelativeLayout implements View.OnClickListener {
 	private PhotoView		image;
 	private ImageView		imageOverlay;
 	private ProgressBar		progress;
@@ -122,7 +125,7 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 		this.loadImage(url, resPlaceHolder, new RoundedShadowTransform(radius, margin));
 	}
 
-	public void loadImage(String url, int resPlaceHolder, Transformation transformation) {
+	public void loadImage(final String url, int resPlaceHolder, Transformation transformation) {
 		this.placeholder = resPlaceHolder;
 
 		if (this.image != null && this.progress != null) {
@@ -159,6 +162,7 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 				public void onError() {
 					super.onError();
 					showFail();
+					Log.d(BaseConstants.LOG, "Failed to load : " + url);
 
 					if (listenerLoad != null)
 						listenerLoad.onFail();
@@ -231,7 +235,8 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 			if (diffTime < 500) {
 				listener.onDoubleTap(v);
 				delay = 0;
-			} else {
+			}
+			else {
 				delay = curTime;
 			}
 
@@ -306,11 +311,13 @@ public class ImageViewLoader extends RelativeLayout implements View.OnClickListe
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		if (isSquareToWidth) {
 			super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-			image.getLayoutParams().height = widthMeasureSpec;
-		} else if (isSquareToHeight) {
+//			image.getLayoutParams().height = widthMeasureSpec;
+		}
+		else if (isSquareToHeight) {
 			super.onMeasure(heightMeasureSpec, heightMeasureSpec);
-			image.getLayoutParams().width = heightMeasureSpec;
-		} else
+//			image.getLayoutParams().width = heightMeasureSpec;
+		}
+		else
 			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 

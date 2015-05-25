@@ -33,6 +33,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextUtils.TruncateAt;
@@ -333,11 +334,8 @@ public class BaseUIHelper {
 	/**
 	 * This method convets dp unit to equivalent device specific value in pixels.
 	 * 
-	 * @param dp
-	 *            A value in dp(Device independent pixels) unit. Which we need to convert into
-	 *            pixels
-	 * @param context
-	 *            Context to get resources and device specific display metrics
+	 * @param dp A value in dp(Device independent pixels) unit. Which we need to convert into pixels
+	 * @param context Context to get resources and device specific display metrics
 	 * @return A float value to represent Pixels equivalent to dp according to device
 	 */
 	public static float convertDpToPixel(float dp, Context context) {
@@ -350,10 +348,8 @@ public class BaseUIHelper {
 	/**
 	 * This method converts device specific pixels to device independent pixels.
 	 * 
-	 * @param px
-	 *            A value in px (pixels) unit. Which we need to convert into db
-	 * @param context
-	 *            Context to get resources and device specific display metrics
+	 * @param px A value in px (pixels) unit. Which we need to convert into db
+	 * @param context Context to get resources and device specific display metrics
 	 * @return A float value to represent db equivalent to px value
 	 */
 	public static float convertPixelsToDp(float px, Context context) {
@@ -391,14 +387,10 @@ public class BaseUIHelper {
 	/**
 	 * Make a textview to a collapsible textview with the indicator on the right of the textview
 	 * 
-	 * @param tv
-	 *            , {@link TextView} to be converted
-	 * @param upDrawableResId
-	 *            , drawable resource id to be used as up indicator
-	 * @param downDrawableResId
-	 *            , drawable resource id to be used as down indicator
-	 * @param lineTreshold
-	 *            , no of line to be displayed for the collapsed state
+	 * @param tv , {@link TextView} to be converted
+	 * @param upDrawableResId , drawable resource id to be used as up indicator
+	 * @param downDrawableResId , drawable resource id to be used as down indicator
+	 * @param lineTreshold , no of line to be displayed for the collapsed state
 	 */
 	public static void makeCollapsible(
 			final TextView tv, int upDrawableResId, int downDrawableResId,
@@ -538,11 +530,13 @@ public class BaseUIHelper {
 
 				@Override
 				public void beforeTextChanged(
-						CharSequence arg0, int arg1, int arg2, int arg3) {}
+						CharSequence arg0, int arg1, int arg2, int arg3) {
+				}
 
 				@Override
 				public void onTextChanged(
-						CharSequence arg0, int arg1, int arg2, int arg3) {}
+						CharSequence arg0, int arg1, int arg2, int arg3) {
+				}
 
 			});
 		}
@@ -560,13 +554,10 @@ public class BaseUIHelper {
 	 * Adjust the tab host being used in the tab host + view pager to use the new drawableResId for
 	 * tab items
 	 * 
-	 * @param mTabHost
-	 *            , tab host to be adjusted
-	 * @param context
-	 *            , context being used
-	 * @param drawableResId
-	 *            , drawable resource for the new background for tab item. Needs to use
-	 *            drawable with different appropriate states!
+	 * @param mTabHost , tab host to be adjusted
+	 * @param context , context being used
+	 * @param drawableResId , drawable resource for the new background for tab item. Needs to use
+	 *        drawable with different appropriate states!
 	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -1144,5 +1135,18 @@ public class BaseUIHelper {
 		Animation animFadein = AnimationUtils.loadAnimation(view.getContext(),
 				resAnim);
 		view.startAnimation(animFadein);
+	}
+
+	// ================================================================================
+	// SwipeRefresh
+	// ================================================================================
+
+	@SuppressLint("InlinedApi")
+	public static void setRefreshColor(SwipeRefreshLayout sr) {
+		sr.setColorSchemeResources(
+				android.R.color.holo_blue_light,
+				android.R.color.holo_green_light,
+				android.R.color.holo_orange_light,
+				android.R.color.holo_red_light);
 	}
 }

@@ -10,11 +10,12 @@ import com.iapps.common_library.R;
 import com.iapps.libs.objects.Response;
 import com.iapps.libs.views.LoadingCompound;
 
-public abstract class HTTPAsyncImb extends HTTPAsyncTask {
-	private Fragment		fragment;
-	private LoadingCompound	ld;
-	private boolean			displayProgress;
-	private ProgressDialog	mDialog;
+public abstract class HTTPAsyncImb
+	extends HTTPAsyncTask {
+	private Fragment fragment;
+	private LoadingCompound ld;
+	private boolean displayProgress;
+	private ProgressDialog mDialog;
 
 	public HTTPAsyncImb(Fragment frag, LoadingCompound ld) {
 		this.fragment = frag;
@@ -70,7 +71,8 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 			try {
 				if (json.getInt(BaseKeys.STATUS_CODE) == 1) {
 					onSuccess(json);
-				} else {
+				}
+				else {
 					onFail(json);
 				}
 
@@ -79,7 +81,8 @@ public abstract class HTTPAsyncImb extends HTTPAsyncTask {
 				onFail(e.getMessage());
 				e.printStackTrace();
 			}
-		} else {
+		}
+		else {
 			// Failed to parse JSON
 			onFail(fragment.getString(R.string.iapps__unknown_response));
 		}

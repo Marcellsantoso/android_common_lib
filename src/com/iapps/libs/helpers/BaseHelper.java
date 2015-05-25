@@ -1389,7 +1389,7 @@ public class BaseHelper {
 	// Server
 	// ================================================================================
 	public static String toSearchQuery(String key, EditText edt) {
-		return BaseHelper.toSearchQuery(key, edt.getText().toString(), BaseConstants.EXACT);
+		return BaseHelper.toSearchQuery(key, edt.getText().toString(), BaseKeys.EXACT);
 	}
 
 	public static String toSearchQuery(String key, EditText edt, String type) {
@@ -1397,7 +1397,7 @@ public class BaseHelper {
 	}
 
 	public static String toSearchQuery(String key, String value) {
-		return BaseHelper.toSearchQuery(key, value, BaseConstants.EXACT);
+		return BaseHelper.toSearchQuery(key, value, BaseKeys.EXACT);
 	}
 
 	public static String toSearchQuery(String key, String value, String type) {
