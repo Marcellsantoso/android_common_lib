@@ -25,20 +25,20 @@ import com.iapps.libs.helpers.BaseHelper;
 public class LoadingCompound
 	extends LinearLayout {
 
-	private LinearLayout loadingContainer;
-	private LinearLayout retryContainer;
+	private LinearLayout	loadingContainer;
+	private LinearLayout	retryContainer;
 
-	private TextView tvTitle;
-	private TextView tvMessage;
-	private TextView tvLoading;
-	private Button btnRetry;
-	private LoadingListener mStartLoadingListener;
-	private String noNetworkMessage;
-	private String unknownResponseMessage;
-	private String noInternetMessage;
+	private TextView		tvTitle;
+	private TextView		tvMessage;
+	private TextView		tvLoading;
+	private Button			btnRetry;
+	private LoadingListener	mStartLoadingListener;
+	private String			noNetworkMessage;
+	private String			unknownResponseMessage;
+	private String			noInternetMessage;
 
-	private int countTotal = 1, countSuccess;
-	private int animResId = R.anim.fadeout;
+	private int				countTotal	= 1, countSuccess;
+	private int				animResId	= R.anim.fadeout;
 
 	/**
 	 * Listener for retry button onClick Events, and loading is shown
@@ -249,8 +249,7 @@ public class LoadingCompound
 	}
 
 	public void showLoading() {
-		BaseHelper.goneView(retryContainer);
-		BaseHelper.visibleView(loadingContainer);
+		BaseHelper.visibleView(this);
 	}
 
 	public void showError(String title, String message) {

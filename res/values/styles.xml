@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -55,6 +55,8 @@
     <style name="btn_transparent" parent="btn">
         <item name="android:background">@drawable/bg_selectable</item>
         <item name="android:textColor">@color/Black</item>
+        <item name="android:paddingLeft">@dimen/margin_small</item>
+        <item name="android:paddingRight">@dimen/margin_small</item>
     </style>
     <!-- ListView -->
     <style name="lv">

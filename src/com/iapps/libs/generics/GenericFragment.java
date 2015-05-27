@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -20,7 +21,8 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.iapps.common_library.R;
 import com.iapps.libs.helpers.BaseConstants;
 
-public abstract class GenericFragment extends RoboFragment implements OnClickListener,
+public abstract class GenericFragment
+	extends RoboFragment implements OnClickListener,
 		OnItemClickListener,
 		OnLongClickListener {
 	private static final Field	sChildFragmentManagerField;
@@ -34,8 +36,7 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 		if (resLayout > 0) {
 			View v = inflater.inflate(setLayout(), container, false);
 
-			if (setMenuLayout() > 0)
-				setHasOptionsMenu(true);
+			setHasOptionsMenu(true);
 
 			return v;
 		}
@@ -54,7 +55,27 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 		int resLayout = setMenuLayout();
 		if (resLayout > 0)
 			inflater.inflate(setMenuLayout(), menu);
+
+		if (isDebugging() && refreshPage())
+			inflater.inflate(R.menu.refresh_white, menu);
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (setMenuLayout() == 0 && isDebugging() && item.getItemId() == R.id.menu_refresh) {
+			onRefreshPage();
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	public boolean refreshPage() {
+		return false;
+	}
+
+	public void onRefreshPage() {
+	}
+
+	public abstract boolean isDebugging();
 
 	public abstract int setLayout();
 
@@ -152,7 +173,7 @@ public abstract class GenericFragment extends RoboFragment implements OnClickLis
 	// Log
 	// ================================================================================
 	public void log(String text) {
-		if (BaseConstants.IS_DEBUGGING)
+		if (isDebugging())
 			Log.d(BaseConstants.LOG, text);
 	}
 

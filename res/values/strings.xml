@@ -40,6 +40,7 @@
     <!-- Menu -->
     <string name="profile_white">Profile</string>
     <string name="done">Done</string>
+    <string name="share">Share</string>
 
     <!-- Debug -->
     <string name="hardcode">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper eros eget mauris viverra, vehicula tristique urna sollicitudin. Morbi iaculis gravida erat sed tincidunt. Morbi aliquet aliquam mauris mattis pharetra. Nulla id porta dui. Mauris at tempor orci. Etiam sit amet dui erat. In tincidunt consequat nisl, ac placerat lacus porta et. Nam lorem erat, vulputate vitae mauris id, ullamcorper facilisis erat. Sed rhoncus semper lobortis. Nunc tristique molestie magna in sagittis. Proin mauris tellus, sagittis sed faucibus id, accumsan nec neque. Etiam suscipit quam ac lectus feugiat dictum id at orci. Cras in condimentum mi, id viverra dolor. Maecenas lacinia lacus eu libero volutpat eleifend. Aliquam accumsan enim purus, vitae mattis purus convallis quis.

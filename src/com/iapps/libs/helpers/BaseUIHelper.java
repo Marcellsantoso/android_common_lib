@@ -45,14 +45,12 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
@@ -200,76 +198,6 @@ public class BaseUIHelper {
 	// return actionBarHeight;
 	//
 	// }
-
-	public static void expand(View v) {
-		v.measure(LayoutParams.MATCH_PARENT, MeasureSpec.makeMeasureSpec(
-				getScreenHeight(v.getContext()), MeasureSpec.AT_MOST));
-		final int targetHeight = v.getMeasuredHeight();
-		v.getLayoutParams().height = targetHeight;
-		v.requestLayout();
-	}
-
-	public static void expand(
-			final View v, AnimationListener listener, final int initHeight) {
-		v.measure(LayoutParams.MATCH_PARENT, MeasureSpec.makeMeasureSpec(
-				getScreenHeight(v.getContext()), MeasureSpec.AT_MOST));
-		final int targetHeight = v.getMeasuredHeight();
-		v.getLayoutParams().height = initHeight;
-		// v.setVisibility(View.VISIBLE);
-		Animation a = new Animation() {
-
-			@Override
-			protected void applyTransformation(
-					float interpolatedTime, Transformation t) {
-				int init = (int) (((targetHeight * interpolatedTime) <= initHeight) ? initHeight
-						: targetHeight * interpolatedTime);
-				v.getLayoutParams().height = interpolatedTime == 1.0 ? LayoutParams.WRAP_CONTENT
-						: init;
-				v.requestLayout();
-			}
-
-			@Override
-			public boolean willChangeBounds() {
-				return true;
-			}
-		};
-		a.setAnimationListener(listener);
-		// 1dp/ms
-		a.setDuration((int) (targetHeight / v.getContext().getResources()
-				.getDisplayMetrics().density));
-		v.startAnimation(a);
-	}
-
-	public static void collapse(
-			final View v, AnimationListener listener, final int targetHeight) {
-		v.measure(LayoutParams.MATCH_PARENT, MeasureSpec.makeMeasureSpec(
-				getScreenHeight(v.getContext()), MeasureSpec.AT_MOST));
-		final int initialHeight = v.getMeasuredHeight();
-		Animation a = new Animation() {
-
-			@Override
-			protected void applyTransformation(
-					float interpolatedTime, Transformation t) {
-				int height = initialHeight
-						- (int) (initialHeight * interpolatedTime);
-				if (height <= targetHeight) {
-					height = targetHeight;
-				}
-				// expand(v);
-				v.getLayoutParams().height = height;
-				v.requestLayout();
-			}
-
-			@Override
-			public boolean willChangeBounds() {
-				return true;
-			}
-		};
-		a.setAnimationListener(listener);
-		a.setDuration((int) (initialHeight / v.getContext().getResources()
-				.getDisplayMetrics().density));
-		v.startAnimation(a);
-	}
 
 	public static BitmapDrawable writeOnDrawable(
 			Activity actv, Resources res, int drawableId, String text,
@@ -1135,6 +1063,60 @@ public class BaseUIHelper {
 		Animation animFadein = AnimationUtils.loadAnimation(view.getContext(),
 				resAnim);
 		view.startAnimation(animFadein);
+	}
+
+	public static void animExpand(final View v) {
+		v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		final int targetHeight = v.getMeasuredHeight();
+
+		v.getLayoutParams().height = 0;
+		v.setVisibility(View.VISIBLE);
+		Animation a = new Animation()
+		{
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t) {
+				v.getLayoutParams().height = interpolatedTime == 1
+						? LayoutParams.WRAP_CONTENT
+						: (int) (targetHeight * interpolatedTime);
+				v.requestLayout();
+			}
+
+			@Override
+			public boolean willChangeBounds() {
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
+	}
+
+	public static void animCollapse(final View v) {
+		final int initialHeight = v.getMeasuredHeight();
+
+		Animation a = new Animation()
+		{
+			@Override
+			protected void applyTransformation(float interpolatedTime, Transformation t) {
+				if (interpolatedTime == 1) {
+					v.setVisibility(View.GONE);
+				}
+				else {
+					v.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
+					v.requestLayout();
+				}
+			}
+
+			@Override
+			public boolean willChangeBounds() {
+				return true;
+			}
+		};
+
+		// 1dp/ms
+		a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
+		v.startAnimation(a);
 	}
 
 	// ================================================================================

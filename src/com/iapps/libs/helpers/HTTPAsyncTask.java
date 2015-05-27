@@ -45,7 +45,7 @@ import com.iapps.libs.objects.Response;
  * @author melvin
  */
 public abstract class HTTPAsyncTask
-		extends AsyncTask<String, Void, Response> {
+	extends AsyncTask<String, Void, Response> {
 
 	private boolean										httpsEnabled		= false;
 	private boolean										isMultipart			= false;
@@ -55,7 +55,8 @@ public abstract class HTTPAsyncTask
 	private String										method				= BaseConstants.GET;
 	private Fragment									fragment;
 	private LinkedHashMap<String, String>				params				= new LinkedHashMap<String, String>();
-	private ArrayList<LinkedHashMap<String, String>>	fileParams			= new ArrayList<LinkedHashMap<String, String>>();
+	private ArrayList<LinkedHashMap<String, String>>	fileParams			=
+																					new ArrayList<LinkedHashMap<String, String>>();
 	private LinkedHashMap<String, byte[]>				bytesParams			= new LinkedHashMap<String, byte[]>();
 	private HashMap<String, String>						mHeaderParams		= new HashMap<String, String>();
 
@@ -75,8 +76,7 @@ public abstract class HTTPAsyncTask
 	/**
 	 * Set the URL to be used to connect to the end point
 	 * 
-	 * @param url
-	 *            , the url to be used
+	 * @param url , the url to be used
 	 */
 	public HTTPAsyncTask setUrl(String url) {
 

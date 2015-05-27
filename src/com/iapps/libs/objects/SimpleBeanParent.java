@@ -2,12 +2,17 @@ package com.iapps.libs.objects;
 
 import java.util.ArrayList;
 
-public class SimpleBeanParent extends SimpleBean {
+public class SimpleBeanParent
+	extends SimpleBean {
 
 	ArrayList<? extends SimpleBean>	childList	= new ArrayList<SimpleBean>();
 
 	public SimpleBeanParent(int id, String name) {
 		super(id, name);
+	}
+
+	public SimpleBeanParent() {
+		super(0, "");
 	}
 
 	public ArrayList<? extends SimpleBean> getChildList() {

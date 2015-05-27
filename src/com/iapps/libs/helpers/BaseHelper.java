@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.WordUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import org.joda.time.format.DateTimeFormat;
@@ -71,21 +72,21 @@ import com.iapps.libs.views.LoadingCompound;
 
 public class BaseHelper {
 
-	private static final String MIN_AGO = "min ago.";
-	private static final String MINS_AGO = "mins ago.";
-	private static final String HOUR_AGO = "hour ago.";
-	private static final String HOURS_AGO = "hours ago.";
-	private static final String DAY_AGO = "day ago.";
-	private static final String DAYS_AGO = "days ago.";
+	private static final String	MIN_AGO					= "min ago.";
+	private static final String	MINS_AGO				= "mins ago.";
+	private static final String	HOUR_AGO				= "hour ago.";
+	private static final String	HOURS_AGO				= "hours ago.";
+	private static final String	DAY_AGO					= "day ago.";
+	private static final String	DAYS_AGO				= "days ago.";
 
-	private static final String MIN_LEFT = "min left.";
-	private static final String MINS_LEFT = "mins left.";
-	private static final String HOUR_LEFT = "hour left.";
-	private static final String HOURS_LEFT = "hours left.";
-	private static final String DAY_TO_GO = "day to go.";
-	private static final String DAYS_TO_GO = "days to go.";
-	public static final int REQUEST_EMAIL_CODE = 7221;
-	public static final int REQUEST_GET_IMAGE_CODE = 9882;
+	private static final String	MIN_LEFT				= "min left.";
+	private static final String	MINS_LEFT				= "mins left.";
+	private static final String	HOUR_LEFT				= "hour left.";
+	private static final String	HOURS_LEFT				= "hours left.";
+	private static final String	DAY_TO_GO				= "day to go.";
+	private static final String	DAYS_TO_GO				= "days to go.";
+	public static final int		REQUEST_EMAIL_CODE		= 7221;
+	public static final int		REQUEST_GET_IMAGE_CODE	= 9882;
 
 	/**
 	 * Check if a string is empty (length == 0)
@@ -1215,6 +1216,10 @@ public class BaseHelper {
 		return true;
 	}
 
+	public static String capitalize(String text) {
+		return WordUtils.capitalize(text);
+	}
+
 	public static String getMobileNumber(Context ctx) {
 		TelephonyManager mTelephonyMgr;
 		mTelephonyMgr = (TelephonyManager)
@@ -1400,6 +1405,10 @@ public class BaseHelper {
 		return BaseHelper.toSearchQuery(key, value, BaseKeys.EXACT);
 	}
 
+	public static String toSearchQuery(String key, int value) {
+		return BaseHelper.toSearchQuery(key, Integer.toString(value), BaseKeys.EXACT);
+	}
+
 	public static String toSearchQuery(String key, String value, String type) {
 		if (BaseHelper.isEmpty(key) || BaseHelper.isEmpty(value) || BaseHelper.isEmpty(type)) {
 			return "";
@@ -1407,5 +1416,4 @@ public class BaseHelper {
 
 		return key + "," + value + "," + type + ";";
 	}
-
 }
