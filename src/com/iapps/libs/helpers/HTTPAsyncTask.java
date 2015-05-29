@@ -259,6 +259,10 @@ public abstract class HTTPAsyncTask
 		return this;
 	}
 
+	public int connectionTimeout() {
+		return BaseConstants.TIMEOUT;
+	}
+
 	/**
 	 * Disables the SSL certificate checking for new instances of {@link HttpsURLConnection} This
 	 * has been created to aid testing on a local box, not for use on production.
@@ -334,8 +338,10 @@ public abstract class HTTPAsyncTask
 			else {
 				conn = (HttpURLConnection) url.openConnection();
 			}
-			conn.setConnectTimeout(BaseConstants.TIMEOUT);
-			conn.setReadTimeout(BaseConstants.TIMEOUT);
+			if (connectionTimeout() > 0) {
+				conn.setConnectTimeout(connectionTimeout());
+				conn.setReadTimeout(connectionTimeout());
+			}
 			conn.setUseCaches(false);
 			Set<Map.Entry<String, String>> header = mHeaderParams.entrySet();
 			for (Map.Entry<String, String> entry : header) {

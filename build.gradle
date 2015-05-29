@@ -1,16 +1,16 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile project(':adt-bundle-mac-x86_64-20140702:sdk:extras:google:google_play_services:libproject:google-play-services_lib')
     compile project(':Android:Git:ActionBar4RoboGuice:com.verano.actionbar4guice')
     compile project(':Android:Git:android-betterpickers:library')
-    compile project(':Android:Git:MaterialDesignLibrary:MaterialDesign')
     compile project(':Android:Git:datetimepicker:datetimepicker-library')
     compile project(':Android:Git:Calligraphy:calligraphy:src:main')
-    compile project(':Android:Git:MaterialWidget:library:src:main')
     compile project(':Android:Git:facebook:facebook-android-sdk:facebook')
     compile project(':adt-bundle-mac-x86_64-20140702:sdk:extras:android:support:v7:appcompat')
+    compile project(':adt-bundle-mac-x86_64-20140702:sdk:extras:google:google_play_services:libproject:google-play-services_lib')
+    compile project(':Android:Git:MaterialWidget:library:src:main')
+    compile project(':Android:Git:MaterialDesignLibrary:MaterialDesign')
 }
 
 android {

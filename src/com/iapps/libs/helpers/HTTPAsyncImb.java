@@ -12,10 +12,10 @@ import com.iapps.libs.views.LoadingCompound;
 
 public abstract class HTTPAsyncImb
 	extends HTTPAsyncTask {
-	private Fragment fragment;
-	private LoadingCompound ld;
-	private boolean displayProgress;
-	private ProgressDialog mDialog;
+	private Fragment		fragment;
+	private LoadingCompound	ld;
+	private boolean			displayProgress;
+	private ProgressDialog	mDialog;
 
 	public HTTPAsyncImb(Fragment frag, LoadingCompound ld) {
 		this.fragment = frag;
@@ -65,7 +65,7 @@ public abstract class HTTPAsyncImb
 		if (ld != null)
 			json = BaseHelper.handleResponse(response, ld);
 		else
-			json = BaseHelper.handleResponse(response, true, fragment.getActivity());
+			json = BaseHelper.handleResponse(response, false, fragment.getActivity());
 
 		if (json != null) {
 			try {
@@ -73,33 +73,33 @@ public abstract class HTTPAsyncImb
 					onSuccess(json);
 				}
 				else {
-					onFail(json);
+					onFail(BaseConstants.CODE_BACKEND_FAIL, json);
 				}
 
 			}
 			catch (JSONException e) {
-				onFail(e.getMessage());
+				onFail(BaseConstants.CODE_INVALID_RESPONSE, e.getMessage());
 				e.printStackTrace();
 			}
 		}
 		else {
 			// Failed to parse JSON
-			onFail(fragment.getString(R.string.iapps__unknown_response));
+			onFail(BaseConstants.CODE_EMPTY_RESPONSE, fragment.getString(R.string.iapps__unknown_response));
 		}
 	}
 
 	public abstract void onSuccess(JSONObject j);
 
-	public void onFail(JSONObject j) {
+	public void onFail(int code, JSONObject j) {
 		try {
-			onFail(j.getString(BaseKeys.STATUS_MESSAGE));
+			onFail(code, j.getString(BaseKeys.STATUS_MESSAGE));
 		}
 		catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void onFail(String message) {
+	public void onFail(int code, String message) {
 		if (ld != null)
 			ld.showError("", message);
 		else

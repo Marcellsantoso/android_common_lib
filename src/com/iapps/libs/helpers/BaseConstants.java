@@ -24,6 +24,7 @@ public class BaseConstants {
 	public static final String	MIME_CSV				= "text/csv";
 	public static final String	TEMP_PHOTO_FILE			= "tmp.JPEG";
 	public static final String	DATE_JSON				= "yyyy-MM-dd";
+	public static final String	DATE_JSON_FULL			= "yyyy-MM-dd HH:mm:ss";
 	public static final String	DATE_YMD				= "yyyy-MM-dd";
 	public static final String	DATE_MD					= "dd MMM";
 	public static final String	DATE_MDY				= DATE_MD + ", yyyy";
@@ -57,4 +58,10 @@ public class BaseConstants {
 	// ================================================================================
 	public static final String	KEY_DATETIMEPICKER		= "dtpicker";
 
+	// ================================================================================
+	// Status code
+	// ================================================================================
+	public static final int		CODE_BACKEND_FAIL		= 101;
+	public static final int		CODE_EMPTY_RESPONSE		= 102;
+	public static final int		CODE_INVALID_RESPONSE	= 103;
 }

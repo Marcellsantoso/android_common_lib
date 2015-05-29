@@ -1390,6 +1390,14 @@ public class BaseHelper {
 		return true;
 	}
 
+	public static boolean validateEmail(EditText edt) {
+		if (BaseHelper.isValidEmail(edt.getText().toString()))
+			return true;
+
+		BaseHelper.showRequired(edt.getContext(), edt.getHint().toString());
+		return false;
+	}
+
 	// ================================================================================
 	// Server
 	// ================================================================================
