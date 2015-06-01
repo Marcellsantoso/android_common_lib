@@ -1267,6 +1267,96 @@ public class BaseHelper {
 		context.startActivity(intent);
 	}
 
+	public static void intentFacebook(Context ctx, String url) {
+		Uri uri;
+		try {
+			ctx.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+			// http://stackoverflow.com/a/24547437/1048340
+			uri = Uri.parse("fb://facewebmodal/f?href=" + url);
+		}
+		catch (PackageManager.NameNotFoundException e) {
+			uri = Uri.parse(url);
+		}
+		ctx.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+	}
+
+	public static void intentTwitter(Context ctx, String url, String twitterId) {
+		PackageInfo info;
+		try {
+			info = ctx.getPackageManager().getPackageInfo("com.twitter.android", 0);
+			Intent intent;
+			if (info.applicationInfo.enabled)
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=" + twitterId));
+			else
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+			ctx.startActivity(intent);
+		}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void intentInstagram(Context ctx, String url) {
+		final Intent intent = new Intent(Intent.ACTION_VIEW);
+		try {
+			if (ctx.getPackageManager().getPackageInfo("com.instagram.android", 0) != null) {
+				if (url.endsWith("/")) {
+					url = url.substring(0, url.length() - 1);
+				}
+				final String username = url.substring(url.lastIndexOf("/") + 1);
+				// http://stackoverflow.com/questions/21505941/intent-to-open-instagram-user-profile-on-android
+				intent.setData(Uri.parse("http://instagram.com/_u/" + username));
+				intent.setPackage("com.instagram.android");
+			}
+			else {
+				intent.setData(Uri.parse(url));
+			}
+			ctx.startActivity(intent);
+		}
+		catch (NameNotFoundException ignored) {}
+	}
+
+	public static void intentYoutube(Context ctx, String url) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+
+		try {
+			if (ctx.getPackageManager().getPackageInfo("com.google.android.youtube", 0) != null) {
+				intent.setPackage("com.google.android.youtube");
+				intent.setData(Uri.parse(url));
+				ctx.startActivity(intent);
+			}
+			else {
+				intent.setData(Uri.parse(url));
+			}
+			ctx.startActivity(intent);
+		}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void intentPinterest(Context ctx, String url) {
+		// Intent intent = new Intent(Intent.ACTION_VIEW);
+		// com.pinterest
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+
+		try {
+			if (ctx.getPackageManager().getPackageInfo("com.pinterest", 0) != null) {
+				intent.setPackage("com.pinterest");
+				intent.setData(Uri.parse(url));
+				ctx.startActivity(intent);
+			}
+			else {
+				intent.setData(Uri.parse(url));
+			}
+			ctx.startActivity(intent);
+		}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// ================================================================================
 	// Spannable Text
 	// ================================================================================
