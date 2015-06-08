@@ -632,7 +632,6 @@ public class BaseUIHelper {
 		String filePath = Environment.getExternalStorageDirectory() + "/"
 				+ BaseConstants.TEMP_PHOTO_FILE;
 		try {
-
 			avatar = new File(filePath);
 			Uri uri = Uri.fromFile(avatar);
 

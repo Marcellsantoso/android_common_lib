@@ -1242,11 +1242,19 @@ public class BaseHelper {
 	}
 
 	public static void intentEmail(Context context, String email, String subject) {
+		BaseHelper.intentEmail(context, email, subject, "");
+	}
+
+	public static void intentEmail(Context context, String email, String subject, String text) {
 		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 		emailIntent.setType("plain/text");
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
 				email
+
 		});
+		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+
 		context.startActivity(Intent.createChooser(emailIntent, "Send mail.."));
 	}
 
@@ -1282,19 +1290,20 @@ public class BaseHelper {
 
 	public static void intentTwitter(Context ctx, String url, String twitterId) {
 		PackageInfo info;
+		Intent intent;
 		try {
 			info = ctx.getPackageManager().getPackageInfo("com.twitter.android", 0);
-			Intent intent;
 			if (info.applicationInfo.enabled)
 				intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=" + twitterId));
 			else
 				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 
-			ctx.startActivity(intent);
 		}
 		catch (NameNotFoundException e) {
 			e.printStackTrace();
+			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		}
+		ctx.startActivity(intent);
 	}
 
 	public static void intentInstagram(Context ctx, String url) {
@@ -1312,9 +1321,12 @@ public class BaseHelper {
 			else {
 				intent.setData(Uri.parse(url));
 			}
-			ctx.startActivity(intent);
 		}
-		catch (NameNotFoundException ignored) {}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
+			intent.setData(Uri.parse(url));
+		}
+		ctx.startActivity(intent);
 	}
 
 	public static void intentYoutube(Context ctx, String url) {
@@ -1324,16 +1336,16 @@ public class BaseHelper {
 			if (ctx.getPackageManager().getPackageInfo("com.google.android.youtube", 0) != null) {
 				intent.setPackage("com.google.android.youtube");
 				intent.setData(Uri.parse(url));
-				ctx.startActivity(intent);
 			}
 			else {
 				intent.setData(Uri.parse(url));
 			}
-			ctx.startActivity(intent);
 		}
 		catch (NameNotFoundException e) {
+			intent.setData(Uri.parse(url));
 			e.printStackTrace();
 		}
+		ctx.startActivity(intent);
 	}
 
 	public static void intentPinterest(Context ctx, String url) {
@@ -1350,11 +1362,12 @@ public class BaseHelper {
 			else {
 				intent.setData(Uri.parse(url));
 			}
-			ctx.startActivity(intent);
 		}
 		catch (NameNotFoundException e) {
 			e.printStackTrace();
+			intent.setData(Uri.parse(url));
 		}
+		ctx.startActivity(intent);
 	}
 
 	// ================================================================================
@@ -1464,6 +1477,18 @@ public class BaseHelper {
 				.setDecimalVisibility(View.GONE)
 				.setPlusMinusVisibility(View.GONE).setAllowZero(true)
 				.setReference(tag).show();
+	}
+
+	public static void numberPicker(EditText edt, final Fragment frag, final int tag) {
+		edt.setFocusable(false);
+		edt.setLongClickable(false);
+		edt.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				BaseHelper.numberPicker(frag, tag);
+			}
+		});
 	}
 
 	// ================================================================================

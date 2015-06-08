@@ -14,16 +14,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.iapps.common_library.R;
 import com.iapps.external.photoview.PhotoView;
 import com.iapps.libs.helpers.BaseConstants;
+import com.iapps.libs.helpers.BaseHelper;
 import com.iapps.libs.helpers.BaseUIHelper;
 import com.iapps.libs.helpers.CircleTransform;
 import com.iapps.libs.helpers.RoundedShadowTransform;
@@ -36,7 +35,7 @@ import com.squareup.picasso.Transformation;
 
 public class ImageViewLoader
 	extends RelativeLayout implements View.OnClickListener {
-	private PhotoView		image;
+	private ImageView		image;
 	private ImageView		imageOverlay;
 	private ProgressBar		progress;
 	@SuppressWarnings("unused")
@@ -57,13 +56,12 @@ public class ImageViewLoader
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.image_view_loader, this, true);
 
-		image = (PhotoView) this.findViewById(R.id.image);
+		image = (ImageView) this.findViewById(R.id.image);
 		imageOverlay = (ImageView) this.findViewById(R.id.imgOverlay);
 		progress = (ProgressBar) this.findViewById(R.id.loader);
 
 		// Default scale type
 		image.setScaleType(ScaleType.CENTER_CROP);
-		image.setZoomable(false);
 	}
 
 	public void hideProgress() {
@@ -128,6 +126,12 @@ public class ImageViewLoader
 	public void loadImage(final String url, int resPlaceHolder, Transformation transformation) {
 		this.placeholder = resPlaceHolder;
 
+		if (BaseHelper.isEmpty(url)) {
+			hideProgress();
+			showFail();
+			return;
+		}
+
 		if (this.image != null && this.progress != null) {
 			RequestCreator imageLoader = Picasso
 					.with(this.getContext())
@@ -174,18 +178,19 @@ public class ImageViewLoader
 	}
 
 	public void loadImage(int resImage) {
-		RequestCreator imageLoader = Picasso
-				.with(this.getContext())
-				.load(resImage);
-		imageLoader.into(this.image);
-
+		if (resImage != 0) {
+			RequestCreator imageLoader = Picasso
+					.with(this.getContext())
+					.load(resImage);
+			imageLoader.into(this.image);
+		}
 		hideProgress();
 	}
 
 	// ================================================================================
 	// Getter & Setter
 	// ================================================================================
-	public PhotoView getImage() {
+	public ImageView getImage() {
 		return image;
 	}
 
@@ -244,30 +249,6 @@ public class ImageViewLoader
 	}
 
 	// ================================================================================
-	// Pinch to zoom
-	// ================================================================================
-	public void setZoomable(boolean isZoomable) {
-		this.image.setZoomable(isZoomable);
-	}
-
-	// ================================================================================
-	// Kenburn
-	// ================================================================================
-	public void startKenburn() {
-		this.image.resume();
-	}
-
-	public void startKenburn(long duration, Interpolator interpolator) {
-		RandomTransitionGenerator generator = new RandomTransitionGenerator(duration, interpolator);
-		this.image.setTransitionGenerator(generator);
-		this.image.resume();
-	}
-
-	public void stopKenburn() {
-		this.image.pause();
-	}
-
-	// ================================================================================
 	// Popup
 	// ================================================================================
 	public void setPopupOnClick(boolean popup) {
@@ -287,13 +268,15 @@ public class ImageViewLoader
 				null);
 		popup.setContentView(view);
 
-		ImageViewLoader img = (ImageViewLoader) view.findViewById(R.id.img);
-		img.getImage().setImageDrawable(this.image.getDrawable());
+		PhotoView img = (PhotoView) view.findViewById(R.id.img);
+		img.setImageDrawable(this.image.getDrawable());
 		img.setSquareToWidth(true);
 		img.setZoomable(true);
-		img.getImage().setScaleType(ScaleType.FIT_CENTER);
-		img.setImageOverlay(0);
-		img.hideProgress();
+		img.setScaleType(ScaleType.FIT_CENTER);
+
+		// img.set
+		// img.setImageOverlay(0);
+		// img.hideProgress();
 
 		popup.setCancelable(true);
 		popup.show();
@@ -311,11 +294,11 @@ public class ImageViewLoader
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		if (isSquareToWidth) {
 			super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-//			image.getLayoutParams().height = widthMeasureSpec;
+			// image.getLayoutParams().height = widthMeasureSpec;
 		}
 		else if (isSquareToHeight) {
 			super.onMeasure(heightMeasureSpec, heightMeasureSpec);
-//			image.getLayoutParams().width = heightMeasureSpec;
+			// image.getLayoutParams().width = heightMeasureSpec;
 		}
 		else
 			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -341,17 +324,21 @@ public class ImageViewLoader
 	// Convert to upload format
 	// ================================================================================
 	public String getUploadFormat() {
-		Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-		if (bitmap != null) {
-			showProgress();
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
-			byte[] image = stream.toByteArray();
+		try {
+			Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+			if (bitmap != null) {
+				showProgress();
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+				byte[] image = stream.toByteArray();
 
-			hideProgress();
-			return Base64.encodeToString(image, 0);
+				hideProgress();
+				return Base64.encodeToString(image, 0);
+			}
 		}
-
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "";
 	}
 
