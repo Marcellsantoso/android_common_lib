@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import com.iapps.libs.objects.SimpleBean;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseAdapterList extends ArrayAdapter {
-	// private ViewHolder viewHolder;
+public abstract class BaseAdapterList
+	extends ArrayAdapter {
 	private int	resLayout;
 
 	@SuppressWarnings("unchecked")
@@ -56,11 +56,37 @@ public abstract class BaseAdapterList extends ArrayAdapter {
 		return convertView;
 	}
 
+	/**
+	 * set your app_theme here. R.style.CustomAppTheme
+	 * @return
+	 */
 	public abstract int setAppTheme();
 
+	/**
+	 * Give a custom object to hold all the views Example : public class ViewHolder{ TextView
+	 * tvTitle; TextView tvDesc; ImageView img; }
+	 * @return
+	 */
 	public abstract Object setViewHolder();
 
+	/**
+	 * Declare items in the Holder Object links to which element How to use : ViewHolder holder =
+	 * (ViewHolder) objectHolder; holder.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+	 * 
+	 * *ViewHolder can be replaced with any other custom object*
+	 * 
+	 * @param view
+	 * @param objectHolder - Cast this object to your custom object, so that u can use the methods
+	 *        within
+	 * @return
+	 */
 	public abstract View initView(View view, Object objectHolder);
 
+	/**
+	 * Fill in custom objects with the data. holder.tvTitle.setText("text goes here");
+	 * @param objectHolder
+	 * @param position
+	 */
 	public abstract void setView(Object objectHolder, int position);
+
 }
