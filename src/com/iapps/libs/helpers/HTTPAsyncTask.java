@@ -254,6 +254,7 @@ public abstract class HTTPAsyncTask
 	}
 
 	public HTTPAsyncTask execute() {
+//		String url2 = this.url.toString();
 		super.execute();
 
 		return this;

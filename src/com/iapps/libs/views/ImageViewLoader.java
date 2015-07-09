@@ -125,13 +125,15 @@ public class ImageViewLoader
 
 	public void loadImage(final String url, int resPlaceHolder, Transformation transformation) {
 		this.placeholder = resPlaceHolder;
-
+		showProgress();
+		
 		if (BaseHelper.isEmpty(url)) {
 			hideProgress();
 			showFail();
 			return;
 		}
 
+		Log.d("ImageViewLoader", "Load : " + url);
 		if (this.image != null && this.progress != null) {
 			RequestCreator imageLoader = Picasso
 					.with(this.getContext())

@@ -1227,6 +1227,18 @@ public class BaseHelper {
 		return mTelephonyMgr.getLine1Number();
 	}
 
+	public static String getLanguage() {
+		return Locale.getDefault().getLanguage();
+	}
+
+	public static boolean isLangIndo() {
+		return getLanguage().equalsIgnoreCase("in");
+	}
+
+	public static String breakLine(String text) {
+		return text.replace("\\n", System.getProperty("line.separator"));
+	}
+
 	// ================================================================================
 	// Intent
 	// ================================================================================
@@ -1276,6 +1288,9 @@ public class BaseHelper {
 	}
 
 	public static void intentFacebook(Context ctx, String url) {
+		if (BaseHelper.isEmpty(url))
+			return;
+
 		Uri uri;
 		try {
 			ctx.getPackageManager().getPackageInfo("com.facebook.katana", 0);
@@ -1289,6 +1304,9 @@ public class BaseHelper {
 	}
 
 	public static void intentTwitter(Context ctx, String url, String twitterId) {
+		if (BaseHelper.isEmpty(url))
+			return;
+
 		PackageInfo info;
 		Intent intent;
 		try {
@@ -1307,6 +1325,9 @@ public class BaseHelper {
 	}
 
 	public static void intentInstagram(Context ctx, String url) {
+		if (BaseHelper.isEmpty(url))
+			return;
+
 		final Intent intent = new Intent(Intent.ACTION_VIEW);
 		try {
 			if (ctx.getPackageManager().getPackageInfo("com.instagram.android", 0) != null) {
@@ -1330,6 +1351,9 @@ public class BaseHelper {
 	}
 
 	public static void intentYoutube(Context ctx, String url) {
+		if (BaseHelper.isEmpty(url))
+			return;
+
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 
 		try {
@@ -1349,6 +1373,9 @@ public class BaseHelper {
 	}
 
 	public static void intentPinterest(Context ctx, String url) {
+		if (BaseHelper.isEmpty(url))
+			return;
+
 		// Intent intent = new Intent(Intent.ACTION_VIEW);
 		// com.pinterest
 		Intent intent = new Intent(Intent.ACTION_VIEW);
