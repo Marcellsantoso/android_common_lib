@@ -58,9 +58,15 @@ public abstract class FacebookLogin {
 		// Check if the session is open
 		if (state.isOpened()) {
 			if (isFBAsyncRunning == false) {
-				Request req = new Request(session, "me");
-				FacebookRequestAsyncTask fb = new FacebookRequestAsyncTask(req);
-				fb.execute();
+				try {
+					Request req = new Request(session, "me");
+					FacebookRequestAsyncTask fb = new FacebookRequestAsyncTask(req);
+					fb.execute();
+					isFBAsyncRunning = true;
+				}
+				catch (NullPointerException e) {
+					BaseHelper.showAlert(frag.getActivity(), "Facebook login error, please try again!");
+				}
 			}
 			else {
 				// it is already running
@@ -107,9 +113,9 @@ public abstract class FacebookLogin {
 
 	// Facebook Request
 	private class FacebookRequestAsyncTask
-			extends RequestAsyncTask {
+		extends RequestAsyncTask {
 
-		final ProgressDialog	mDialog	= new ProgressDialog(frag.getActivity());
+		ProgressDialog	mDialog	= new ProgressDialog(frag.getActivity());
 
 		public FacebookRequestAsyncTask(Request request) {
 			super(request);
@@ -128,7 +134,7 @@ public abstract class FacebookLogin {
 		@Override
 		public void onPostExecute(List<Response> result) {
 			mDialog.dismiss();
-			isFBAsyncRunning = false;
+//			isFBAsyncRunning = false;
 			if (result != null && result.size() > 0) {
 				try {
 					Response m = result.get(0);

@@ -15,6 +15,12 @@
  *******************************************************************************/
 package com.iapps.external.photoview;
 
+import static android.view.MotionEvent.ACTION_CANCEL;
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_UP;
+
+import java.lang.ref.WeakReference;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -34,16 +40,10 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import java.lang.ref.WeakReference;
-
 import com.iapps.external.photoview.gestures.OnGestureListener;
 import com.iapps.external.photoview.gestures.VersionedGestureDetector;
 import com.iapps.external.photoview.log.LogManager;
 import com.iapps.external.photoview.scrollerproxy.ScrollerProxy;
-
-import static android.view.MotionEvent.ACTION_CANCEL;
-import static android.view.MotionEvent.ACTION_DOWN;
-import static android.view.MotionEvent.ACTION_UP;
 
 public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
         OnGestureListener,

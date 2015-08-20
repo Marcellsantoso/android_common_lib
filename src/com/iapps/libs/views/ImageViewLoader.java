@@ -28,7 +28,10 @@ import com.iapps.libs.helpers.CircleTransform;
 import com.iapps.libs.helpers.RoundedShadowTransform;
 import com.iapps.libs.objects.ListenerDoubleTap;
 import com.iapps.libs.objects.ListenerLoad;
-import com.squareup.picasso.Callback.EmptyCallback;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
@@ -66,10 +69,12 @@ public class ImageViewLoader
 
 	public void hideProgress() {
 		progress.setVisibility(View.GONE);
+		this.image.setVisibility(View.VISIBLE);
 	}
 
 	public void showProgress() {
 		progress.setVisibility(View.VISIBLE);
+		this.image.setVisibility(View.INVISIBLE);
 	}
 
 	public void showFail() {
@@ -77,6 +82,7 @@ public class ImageViewLoader
 			image.setScaleType(ScaleType.CENTER);
 			image.setImageResource(R.drawable.ic_cross_light);
 		}
+		this.image.setVisibility(View.VISIBLE);
 	}
 
 	// ================================================================================
@@ -126,7 +132,7 @@ public class ImageViewLoader
 	public void loadImage(final String url, int resPlaceHolder, Transformation transformation) {
 		this.placeholder = resPlaceHolder;
 		showProgress();
-		
+
 		if (BaseHelper.isEmpty(url)) {
 			hideProgress();
 			showFail();
@@ -135,38 +141,19 @@ public class ImageViewLoader
 
 		Log.d("ImageViewLoader", "Load : " + url);
 		if (this.image != null && this.progress != null) {
-			RequestCreator imageLoader = Picasso
-					.with(this.getContext())
-					.load(url);
-
-			if (!isFade) {
-				imageLoader.noFade();
-			}
-
-			if (resPlaceHolder > 0) {
-				imageLoader.placeholder(resPlaceHolder);
-			}
-
-			// Rounded image
-			if (transformation != null) {
-				imageLoader = imageLoader.transform(transformation);
-			}
-
-			imageLoader.into(this.image, new EmptyCallback() {
+			DisplayImageOptions options = new DisplayImageOptions.Builder()
+					.cacheInMemory(true)
+					.cacheOnDisk(true)
+					.build();
+			ImageLoader.getInstance().displayImage(url, this.image, options, new ImageLoadingListener() {
 
 				@Override
-				public void onSuccess() {
-					super.onSuccess();
-
-					if (listenerLoad != null)
-						listenerLoad.onSuccess();
-
-					hideProgress();
+				public void onLoadingStarted(String imageUri, View view) {
+					showProgress();
 				}
 
 				@Override
-				public void onError() {
-					super.onError();
+				public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 					showFail();
 					Log.d(BaseConstants.LOG, "Failed to load : " + url);
 
@@ -174,6 +161,20 @@ public class ImageViewLoader
 						listenerLoad.onFail();
 
 					hideProgress();
+				}
+
+				@Override
+				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+					if (listenerLoad != null)
+						listenerLoad.onSuccess();
+					Log.d(BaseConstants.LOG, "Load : " + url);
+					hideProgress();
+				}
+
+				@Override
+				public void onLoadingCancelled(String imageUri, View view) {
+					// TODO Auto-generated method stub
+
 				}
 			});
 		}

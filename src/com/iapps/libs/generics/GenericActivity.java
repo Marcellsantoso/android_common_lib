@@ -1,14 +1,34 @@
 package com.iapps.libs.generics;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.iapps.libs.helpers.BaseUIHelper;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.verano.actionbar4guice.activity.RoboActionBarActivity;
 
 public class GenericActivity
 	extends RoboActionBarActivity {
-	int containerId = 0;
+	int	containerId	= 0;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
+				.build();
+
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+				.defaultDisplayImageOptions(defaultOptions)
+				.build();
+
+		ImageLoader.getInstance().init(config);
+	}
 
 	// ================================================================================
 	// Fragment Functions
@@ -33,6 +53,19 @@ public class GenericActivity
 	public void addFragment(int containerId, Fragment frag) {
 		if (containerId > 0) {
 			getSupportFragmentManager().beginTransaction()
+					.add(containerId, frag).addToBackStack(null).commit();
+
+			if (getSupportActionBar() != null)
+				getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+			// Hide keyboard by default
+			BaseUIHelper.hideKeyboard(this);
+		}
+	}
+
+	public void addFragmentWithAnim(Fragment frag, int animIn, int animOut) {
+		if (containerId > 0) {
+			getSupportFragmentManager().beginTransaction().setCustomAnimations(animIn, animOut, animIn, animOut)
 					.add(containerId, frag).addToBackStack(null).commit();
 
 			if (getSupportActionBar() != null)
